@@ -29,7 +29,7 @@ namespace Kontur.GameStats.Server
 
         private static void RunServer(Options options)
         {
-            var config=new HostConfiguration();
+            var config = new HostConfiguration();
             config.UrlReservations.CreateAutomatically = true;
             using (var host = new NancyHost(config, new Uri(options.Prefix)))
             {
