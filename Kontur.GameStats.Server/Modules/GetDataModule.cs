@@ -3,9 +3,9 @@ using Nancy;
 
 namespace Kontur.GameStats.Server.Modules
 {
-    public class GetCurrentDataModule : NancyModule
+    public class GetDataModule : NancyModule
     {
-        public GetCurrentDataModule()
+        public GetDataModule()
         {
             Get["/servers/{endpoint}/info"] = _ =>
             {

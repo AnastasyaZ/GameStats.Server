@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Kontur.GameStats.Server;
+using Kontur.GameStats.Server.Modules;
 using NUnit.Framework;
 using Nancy;
 using Nancy.Testing;
@@ -43,12 +43,7 @@ namespace Tests
         {
             var model = new NancyTestModule.JsonModel { stringField = "ewq", intField = 85 };
 
-            var response = browser.Post("/post_json", with =>
-            {
-                with.HttpRequest();
-                with.Body(JSON.ToJSON(model));
-                with.Header("content-type", "application/json");
-            });
+            var response = browser.Post("/post_json", with =>with.JsonBody(model));
 
             response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
             response.Body.AsString().ShouldBeEquivalentTo(

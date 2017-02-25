@@ -15,7 +15,7 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            browser = new Browser(with => with.Module<GetCurrentDataModule>());
+            browser = new Browser(with => with.Module<GetDataModule>());
         }
 
         [Test]

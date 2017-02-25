@@ -37,6 +37,10 @@
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LiteDB, Version=3.0.1.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.3.0.1\lib\net35\LiteDB.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nancy, Version=1.4.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.1.4.3\lib\net40\Nancy.dll</HintPath>
       <Private>True</Private>
@@ -57,24 +61,27 @@
   <ItemGroup>
     <Compile Include="DataModels\GameServer.cs" />
     <Compile Include="DataModels\PlayersStatistic.cs" />
-    <Compile Include="DataModels\ServerInfo.cs" />
     <Compile Include="DataModels\MatchResults.cs" />
     <Compile Include="DataModels\PlayersResult.cs" />
+    <Compile Include="DataModels\ServerInfo.cs" />
     <Compile Include="DataModels\ServersStatistic.cs" />
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Modules\GetCurrentDataModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Modules\GetDataModule.cs" />
     <Compile Include="Modules\PutDataModule.cs" />
     <Compile Include="Modules\GetStatisticModule.cs" />
-    <Compile Include="NancyTestModule.cs" />
+    <Compile Include="Modules\NancyTestModule.cs" />
+    <Compile Include="RequestHandlers\GetDataHandler.cs" />
+    <Compile Include="RequestHandlers\PlayerStatisticHandler.cs" />
+    <Compile Include="RequestHandlers\PutDataHandler.cs" />
+    <Compile Include="RequestHandlers\ReportsHandler.cs" />
+    <Compile Include="RequestHandlers\ServerStatisticHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
