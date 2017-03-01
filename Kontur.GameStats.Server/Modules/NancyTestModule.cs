@@ -24,7 +24,7 @@ namespace Kontur.GameStats.Server.Modules
                 var model = this.Bind<JsonModel>();
                 return $"Get model: stringField={model.stringField}, intField={model.intField}";
             };
-            Get["/nancy/{index}", true] = async (x, ct) => { await DoingWorkInThread(x.index); return "Hello"; };
+            Get["/nancy/{index}", true] = async (x, ct) => { await DoingWorkInThread(x.index); return HttpStatusCode.OK; };
             Get["/nancy"] = _ => "Hello, Nancy is working.";
         }
 

@@ -1,4 +1,6 @@
-﻿namespace Kontur.GameStats.Server.DataModels
+﻿using System;
+
+namespace Kontur.GameStats.Server.DataModels
 {
     public class PlayersStatistic
     {
@@ -10,7 +12,7 @@
         public double averageScoreboardPercent { get; set; }
         public int maximumMatchesPerDay { get; set; }
         public double averageMatchesPerDay { get; set; }
-        public string lastMatchPlayed { get; set; }
+        public DateTime lastMatchPlayed { get; set; }
         public double killToDeathRatio { get; set; }
     }
 }

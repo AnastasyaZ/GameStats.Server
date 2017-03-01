@@ -1,6 +1,6 @@
 ﻿namespace Kontur.GameStats.Server.DataModels
 {
-    public class MatchResults
+    public class MatchResult
     {
         public string map { get; set; }
         public string gameModel { get; set; }

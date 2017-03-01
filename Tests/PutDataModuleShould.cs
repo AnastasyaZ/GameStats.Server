@@ -20,13 +20,13 @@ namespace Tests
         [Test]
         public void ReturnOK_OnCorrectAdverticeRequest()
         {
-            var model = new ServerInfo
+            var model = new GameServer
             {
-                name = "] My P3rfect Server [",
+                name = "] My P3rfect GameServer [",
                 gameModes = new[] { "DM", "TDM" }
             };
 
-            var responce = browser.Put("/servers/kontur.ru-1024/info", with => with.JsonBody(model));
+            var responce = browser.Put("/servers/kontur.ru-1024/Info1", with => with.JsonBody(model));
 
             responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
         }
@@ -34,7 +34,7 @@ namespace Tests
         [Test]
         public void ReturnBadRequest_OnMatchesRequestFromUnknownServer()
         {
-            var model = new MatchResults
+            var model = new MatchResult
             {
                 map = "DM-HelloWorld",
                 gameModel = "DM",

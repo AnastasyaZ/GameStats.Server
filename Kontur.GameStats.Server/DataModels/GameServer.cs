@@ -2,7 +2,7 @@
 {
     public class GameServer
     {
-        public string endpoint { get; set; }
-        public ServerInfo Info { get; set; }
+        public string name { get; set; }
+        public string[] gameModes { get; set; }
     }
 }

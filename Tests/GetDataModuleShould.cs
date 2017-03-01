@@ -21,7 +21,7 @@ namespace Tests
         [Test]
         public void ReturnNotFound_OnInfoRequestFromUnknownServer()
         {
-            var responce = browser.Get("/servers/kontur.ru-1024/info");
+            var responce = browser.Get("/servers/kontur.ru-1024/Info1");
 
             responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
         }
@@ -29,10 +29,10 @@ namespace Tests
         [Test]
         public void ReturnBadRequest_OnInfoRequest()
         {
-            var responce = browser.Get("/servers/info");
+            var responce = browser.Get("/servers/Info1");
 
             responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-            responce.Body.DeserializeJson<IEnumerable<GameServer>>();
+            responce.Body.DeserializeJson<IEnumerable<GameServerInfo>>();
         }
 
         [Test]
