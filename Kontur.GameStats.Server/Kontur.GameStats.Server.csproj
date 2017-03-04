@@ -79,8 +79,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBase\IDatabaseFacade.cs" />
-    <Compile Include="DataBase\LiteDbFacade.cs" />
+    <Compile Include="DataBase\IDatabaseAdapter.cs" />
+    <Compile Include="DataBase\LiteDbAdapter.cs" />
     <Compile Include="DataModels\GameServerInfo.cs" />
     <Compile Include="DataModels\MatchInfo.cs" />
     <Compile Include="DataModels\PlayersStatistic.cs" />
