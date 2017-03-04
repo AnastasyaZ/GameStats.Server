@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Kontur.GameStats.Server.DataModels;
-using LiteDB;
 
 namespace Kontur.GameStats.Server.Database
 {
-    public class LiteDbAdapter : IDatabaseAdapter
+    public class SingletonLiteDbAdapter : IDatabaseAdapter
     {
-        private readonly LiteDatabase database;
+        private static readonly LiteDbAdapter Database;
 
-        public LiteDbAdapter(string filename)
+        static SingletonLiteDbAdapter()
         {
-            database = new LiteDatabase(filename);
+            Database = new LiteDbAdapter("MyDatabase.db");//TODO Say No To Hardcode!!
         }
 
         public void AddServerInfo(GameServerInfo server)

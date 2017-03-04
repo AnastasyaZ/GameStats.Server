@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Kontur.GameStats.Server.DataModels;
 
-namespace Kontur.GameStats.Server.DataBase
+namespace Kontur.GameStats.Server.Database
 {
-    public interface IDatabaseAdapter
+    public interface IDatabaseAdapter : IDisposable
     {
         void AddServerInfo(GameServerInfo server);
         void AddMatchInfo(MatchInfo match);
