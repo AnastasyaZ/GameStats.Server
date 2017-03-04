@@ -5,7 +5,7 @@ using LiteDB;
 
 namespace Kontur.GameStats.Server.Database
 {
-    public class LiteDbAdapter : IDatabaseAdapter
+    public sealed class LiteDbAdapter : IDatabaseAdapter
     {
         private readonly LiteDatabase database;
 
@@ -16,7 +16,8 @@ namespace Kontur.GameStats.Server.Database
 
         public void AddServerInfo(GameServerInfo server)
         {
-            throw new NotImplementedException();
+            var servers = database.GetCollection<GameServerInfo>("GameServerInfo"); //TODO remove hardcode
+            servers.Insert(server);
         }
 
         public void AddMatchInfo(MatchInfo match)
@@ -26,7 +27,8 @@ namespace Kontur.GameStats.Server.Database
 
         public GameServerInfo GetServerInfo(string endpoint)
         {
-            throw new NotImplementedException();
+            var servers = database.GetCollection<GameServerInfo>("GameServerInfo"); //TODO remove hardcode
+            return servers.FindOne(x => x.endpoint == endpoint);
         }
 
         public MatchInfo GetMatchInfo(string endpoint, DateTime timestamp)
@@ -36,7 +38,8 @@ namespace Kontur.GameStats.Server.Database
 
         public IEnumerable<GameServerInfo> GetServers()
         {
-            throw new NotImplementedException();
+            var servers = database.GetCollection<GameServerInfo>("GameServerInfo"); //TODO remove hardcode
+            return servers.FindAll();
         }
 
         public IEnumerable<MatchInfo> GetMatches(string endpoint)
@@ -44,9 +47,18 @@ namespace Kontur.GameStats.Server.Database
             throw new NotImplementedException();
         }
 
+        #region Dispose
+
         public void Dispose()
         {
-            throw new NotImplementedException();
+            DisposeManagedResources();
         }
+
+        private void DisposeManagedResources()
+        {
+            database.Dispose();
+        }
+
+        #endregion
     }
 }

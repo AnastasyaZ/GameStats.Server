@@ -1,5 +1,4 @@
-﻿using Kontur.GameStats.Server.RequestHandlers;
-using Nancy;
+﻿using Nancy;
 
 namespace Kontur.GameStats.Server.Modules
 {
