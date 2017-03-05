@@ -4,105 +4,105 @@ using System.Text;
 
 namespace Tests.Database
 {
-    public class TempFile : IDisposable
+  public class TempFile : IDisposable
+  {
+    public string Filename { get; }
+
+    public TempFile(string ext = "db")
     {
-        public string Filename { get; }
+      var path = Path.Combine(Environment.CurrentDirectory, "UnitTestData");
+      Directory.CreateDirectory(path);
+      Filename = Path.Combine(path, $"test-{Guid.NewGuid()}.{ext}");
+    }
 
-        public TempFile(string ext = "db")
-        {
-            var path = Path.Combine(Environment.CurrentDirectory, "UnitTestData");
-            Directory.CreateDirectory(path);
-            Filename = Path.Combine(path, $"test-{Guid.NewGuid()}.{ext}");
-        }
+    //public IDiskService Disk(bool journal = true)
+    //{
+    //    return new FileDiskService(Filename, journal);
+    //}
 
-        //public IDiskService Disk(bool journal = true)
-        //{
-        //    return new FileDiskService(Filename, journal);
-        //}
+    //public IDiskService Disk(FileOptions options)
+    //{
+    //    return new FileDiskService(Filename, options);
+    //}
 
-        //public IDiskService Disk(FileOptions options)
-        //{
-        //    return new FileDiskService(Filename, options);
-        //}
+    //public string Conn(string connectionString)
+    //{
+    //    return "filename=\"" + this.Filename + "\";" + connectionString;
+    //}
 
-        //public string Conn(string connectionString)
-        //{
-        //    return "filename=\"" + this.Filename + "\";" + connectionString;
-        //}
+    #region Dispose
 
-        #region Dispose
+    private bool _disposed;
 
-        private bool _disposed;
+    public void Dispose()
+    {
+      Dispose(true);
+      GC.SuppressFinalize(this);
+    }
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+    ~TempFile()
+    {
+      Dispose(false);
+    }
 
-        ~TempFile()
-        {
-            Dispose(false);
-        }
+    protected virtual void Dispose(bool disposing)
+    {
+      if (_disposed)
+        return;
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
+      if (disposing)
+      {
+        // free other managed objects that implement
+        // IDisposable only
+      }
 
-            if (disposing)
-            {
-                // free other managed objects that implement
-                // IDisposable only
-            }
+      File.Delete(Filename);
 
-            File.Delete(Filename);
+      _disposed = true;
+    }
 
-            _disposed = true;
-        }
+    #endregion
 
-        #endregion
+    public long Size => new FileInfo(Filename).Length;
 
-        public long Size => new FileInfo(Filename).Length;
+    public string ReadAsText()
+    {
+      return File.ReadAllText(Filename);
+    }
 
-        public string ReadAsText()
-        {
-            return File.ReadAllText(Filename);
-        }
+    #region LoremIpsum Generator
 
-        #region LoremIpsum Generator
-
-        public static string LoremIpsum(int minWords, int maxWords,
-            int minSentences, int maxSentences,
-            int numParagraphs)
-        {
-            var words = new[] { "lorem", "ipsum", "dolor", "sit", "amet", "consectetuer",
+    public static string LoremIpsum(int minWords, int maxWords,
+        int minSentences, int maxSentences,
+        int numParagraphs)
+    {
+      var words = new[] { "lorem", "ipsum", "dolor", "sit", "amet", "consectetuer",
                 "adipiscing", "elit", "sed", "diam", "nonummy", "nibh", "euismod",
                 "tincidunt", "ut", "laoreet", "dolore", "magna", "aliquam", "erat" };
 
-            var rand = new Random(DateTime.Now.Millisecond);
-            var numSentences = rand.Next(maxSentences - minSentences) + minSentences + 1;
-            var numWords = rand.Next(maxWords - minWords) + minWords + 1;
+      var rand = new Random(DateTime.Now.Millisecond);
+      var numSentences = rand.Next(maxSentences - minSentences) + minSentences + 1;
+      var numWords = rand.Next(maxWords - minWords) + minWords + 1;
 
-            var result = new StringBuilder();
+      var result = new StringBuilder();
 
-            for (int p = 0; p < numParagraphs; p++)
-            {
-                for (int s = 0; s < numSentences; s++)
-                {
-                    for (int w = 0; w < numWords; w++)
-                    {
-                        if (w > 0) { result.Append(" "); }
-                        result.Append(words[rand.Next(words.Length)]);
-                    }
-                    result.Append(". ");
-                }
-                result.AppendLine();
-            }
-
-            return result.ToString();
+      for (var p = 0; p < numParagraphs; p++)
+      {
+        for (var s = 0; s < numSentences; s++)
+        {
+          for (var w = 0; w < numWords; w++)
+          {
+            if (w > 0) { result.Append(" "); }
+            result.Append(words[rand.Next(words.Length)]);
+          }
+          result.Append(". ");
         }
+        result.AppendLine();
+      }
 
-        #endregion
+      return result.ToString();
     }
+
+    #endregion
+  }
 }

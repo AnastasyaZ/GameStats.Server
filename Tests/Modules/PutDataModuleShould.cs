@@ -5,44 +5,44 @@ using Nancy;
 using Nancy.Testing;
 using NUnit.Framework;
 
-namespace Tests
+namespace Tests.Modules
 {
-    public class PutDataModuleShould
+  public class PutDataModuleShould
+  {
+    private Browser browser;
+
+    [SetUp]
+    public void SetUp()
     {
-        private Browser browser;
+      browser = new Browser(with => with.Module<PutDataModule>());
+    }
 
-        [SetUp]
-        public void SetUp()
-        {
-            browser = new Browser(with => with.Module<PutDataModule>());
-        }
+    [Test]
+    public void ReturnOK_OnCorrectAdverticeRequest()
+    {
+      var model = new GameServer
+      {
+        name = "] My P3rfect GameServer [",
+        gameModes = new[] { "DM", "TDM" }
+      };
 
-        [Test]
-        public void ReturnOK_OnCorrectAdverticeRequest()
-        {
-            var model = new GameServer
-            {
-                name = "] My P3rfect GameServer [",
-                gameModes = new[] { "DM", "TDM" }
-            };
+      var responce = browser.Put("/servers/kontur.ru-1024/Info1", with => with.JsonBody(model));
 
-            var responce = browser.Put("/servers/kontur.ru-1024/Info1", with => with.JsonBody(model));
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+    }
 
-            responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-        }
-
-        [Test]
-        public void ReturnBadRequest_OnMatchesRequestFromUnknownServer()
-        {
-            var model = new MatchResult
-            {
-                map = "DM-HelloWorld",
-                gameModel = "DM",
-                fragLimit = 20,
-                timeLimit = 20,
-                timeElapsed = 12.345678,
-                scoreboard = new[]
-                {
+    [Test]
+    public void ReturnBadRequest_OnMatchesRequestFromUnknownServer()
+    {
+      var model = new MatchResult
+      {
+        map = "DM-HelloWorld",
+        gameModel = "DM",
+        fragLimit = 20,
+        timeLimit = 20,
+        timeElapsed = 12.345678,
+        scoreboard = new[]
+          {
                     new PlayersResult
                     {
                         name = "Player1",
@@ -58,12 +58,12 @@ namespace Tests
                         deaths = 21
                     }
                 }
-            };
+      };
 
-            var responce = browser.Put("/servers/kontur.ru-1024/matches/2017-01-22T15:17:00Z",
-                with => with.JsonBody(model));
+      var responce = browser.Put("/servers/kontur.ru-1024/matches/2017-01-22T15:17:00Z",
+          with => with.JsonBody(model));
 
-            responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadGateway);
-        }
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadGateway);
     }
+  }
 }

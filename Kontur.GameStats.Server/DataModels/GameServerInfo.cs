@@ -1,8 +1,11 @@
-﻿namespace Kontur.GameStats.Server.DataModels
+﻿using LiteDB;
+
+namespace Kontur.GameStats.Server.DataModels
 {
-    public class GameServerInfo
-    {
-        public string endpoint { get; set; }
-        public GameServer gameServer { get; set; }
-    }
+  public class GameServerInfo
+  {
+    [BsonIndex]
+    public string endpoint { get; set; }
+    public GameServer gameServer { get; set; }
+  }
 }

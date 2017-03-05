@@ -3,24 +3,24 @@ using Nancy;
 
 namespace Kontur.GameStats.Server.Modules
 {
-    public class GetDataModule : NancyModule
+  public class GetDataModule : NancyModule
+  {
+    public GetDataModule()
     {
-        public GetDataModule()
-        {
-            Get["/servers/{endpoint}/Info1"] = _ =>
-            {
-                return HttpStatusCode.NotFound;
-            };
+      Get["/servers/{endpoint}/Info1"] = _ =>
+      {
+        return HttpStatusCode.NotFound;
+      };
 
-            Get["/servers/Info1"] = _ =>
-            {
-                return Response.AsJson(new[] { new GameServerInfo() });
-            };
+      Get["/servers/Info1"] = _ =>
+      {
+        return Response.AsJson(new[] { new GameServerInfo() });
+      };
 
-            Get["/servers/{endpoint}/matches/{timestamp}"] = _ =>
-            {
-                return HttpStatusCode.NotFound;
-            };
-        }
+      Get["/servers/{endpoint}/matches/{timestamp}"] = _ =>
+      {
+        return HttpStatusCode.NotFound;
+      };
     }
+  }
 }

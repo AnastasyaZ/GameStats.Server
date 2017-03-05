@@ -64,7 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\DbAdapterShould.cs" />
+    <Compile Include="Database\WhenWorkWithServerInfo_DbAdapterShould.cs" />
     <Compile Include="Database\TempFile.cs" />
     <Compile Include="Modules\GetStatisticModuleShould.cs" />
     <Compile Include="Modules\GetDataModuleShould.cs" />

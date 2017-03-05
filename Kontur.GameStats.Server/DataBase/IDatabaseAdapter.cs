@@ -4,15 +4,15 @@ using Kontur.GameStats.Server.DataModels;
 
 namespace Kontur.GameStats.Server.Database
 {
-    public interface IDatabaseAdapter : IDisposable
-    {
-        void AddServerInfo(GameServerInfo server);
-        void AddMatchInfo(MatchInfo match);
+  public interface IDatabaseAdapter : IDisposable
+  {
+    void AddServerInfo(GameServerInfo server);
+    void AddMatchInfo(MatchInfo match);
 
-        GameServerInfo GetServerInfo(string endpoint);
-        MatchInfo GetMatchInfo(string endpoint, DateTime timestamp);
+    GameServerInfo GetServerInfo(string endpoint);
+    MatchInfo GetMatchInfo(string endpoint, DateTime timestamp);
 
-        IEnumerable<GameServerInfo> GetServers();
-        IEnumerable<MatchInfo> GetMatches(string endpoint);
-    }
+    IEnumerable<GameServerInfo> GetServers();
+    IEnumerable<MatchInfo> GetMatches(string endpoint);
+  }
 }

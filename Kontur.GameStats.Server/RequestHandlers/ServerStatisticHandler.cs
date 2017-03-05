@@ -1,7 +1,7 @@
 ﻿namespace Kontur.GameStats.Server.RequestHandlers
 {
-    public class ServerStatisticHandler
-    {
-         
-    }
+  public class ServerStatisticHandler
+  {
+
+  }
 }

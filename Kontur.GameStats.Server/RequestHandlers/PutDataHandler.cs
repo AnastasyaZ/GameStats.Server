@@ -1,6 +1,6 @@
 ﻿namespace Kontur.GameStats.Server.RequestHandlers
 {
-    public class PutDataHandler
-    {
-    }
+  public class PutDataHandler
+  {
+  }
 }

@@ -2,19 +2,19 @@
 
 namespace Kontur.GameStats.Server.Modules
 {
-    public class PutDataModule : NancyModule
+  public class PutDataModule : NancyModule
+  {
+    public PutDataModule()
     {
-        public PutDataModule()
-        {
-            Put["/servers/{endpoint}/Info1"] = _ =>
-            {
-                return HttpStatusCode.OK;
-            };
+      Put["/servers/{endpoint}/Info1"] = _ =>
+      {
+        return HttpStatusCode.OK;
+      };
 
-            Put["/servers/{endpoint}/matches/{timestamp}"] = _ =>
-            {
-                return HttpStatusCode.BadGateway;
-            };
-        }
+      Put["/servers/{endpoint}/matches/{timestamp}"] = _ =>
+      {
+        return HttpStatusCode.BadGateway;
+      };
     }
+  }
 }
