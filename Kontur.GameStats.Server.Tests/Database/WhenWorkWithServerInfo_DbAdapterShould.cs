@@ -26,7 +26,7 @@ namespace Kontur.GameStats.Server.Tests.Database
 
     private readonly GameServerInfo serverInfo2 = new GameServerInfo
     {
-      endpoint = "192.168.35.38",
+      endpoint = "192.168.35.38-5454",
       gameServer = new GameServer
       {
         name = "LocalServer",
@@ -53,7 +53,7 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          db.AddServerInfo(serverInfo1);
+          db.UpsertServerInfo(serverInfo1);
           var result = db.GetServerInfo(serverInfo1.endpoint);
 
           result.ShouldBeEquivalentTo(serverInfo1);
@@ -71,12 +71,12 @@ namespace Kontur.GameStats.Server.Tests.Database
           IList<GameServerInfo> serverInfos = new[] { serverInfo1, serverInfo2, serverInfo3 };
           foreach (var info in serverInfos)
           {
-            db.AddServerInfo(info);
+            db.UpsertServerInfo(info);
           }
 
           var result = db.GetServers();
 
-          result.OrderBy(x => x.endpoint).Should().Equal(serverInfos.OrderBy(x => x.endpoint), ComparisonExtensions.Equal);
+          result.Should().BeEquivalentTo(serverInfos);
         }
       }
     }
@@ -88,7 +88,7 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          db.AddServerInfo(serverInfo1);
+          db.UpsertServerInfo(serverInfo1);
         }
 
         using (var db = new LiteDbAdapter(file.Filename))
@@ -103,19 +103,17 @@ namespace Kontur.GameStats.Server.Tests.Database
     public void NotAddNewRecord_IfServerAlreadyAdded()
     {
       using (var file = new TempFile())
+      using (var db = new LiteDbAdapter(file.Filename))
       {
-        using (var db = new LiteDbAdapter(file.Filename))
+        for (var i = 0; i < 10; i++)
         {
-          for (var i = 0; i < 10; i++)
-          {
-            db.AddServerInfo(serverInfo1);
-            db.AddServerInfo(new GameServerInfo { endpoint = serverInfo1.endpoint, gameServer = new GameServer() });
-            db.AddServerInfo(serverInfo1);
-          }
-          var result = db.GetServers().ToArray();
-          result.Length.ShouldBeEquivalentTo(1);
-          result[0].Equal(serverInfo1).Should().BeTrue();
+          db.UpsertServerInfo(serverInfo1);
+          db.UpsertServerInfo(new GameServerInfo { endpoint = serverInfo1.endpoint, gameServer = new GameServer() });
+          db.UpsertServerInfo(serverInfo1);
         }
+        var result = db.GetServers().ToArray();
+        result.Length.ShouldBeEquivalentTo(1);
+        result[0].Should().Be(serverInfo1);
       }
     }
 
@@ -124,23 +122,21 @@ namespace Kontur.GameStats.Server.Tests.Database
     {
       for (var i = 0; i < 100; i++)
         using (var file = new TempFile())
+        using (var db = new LiteDbAdapter(file.Filename))
         {
-          using (var db = new LiteDbAdapter(file.Filename))
+          var iterations = Parallel.For(0, 1000, _ =>
+           {
+             db.GetServers().Count(x => x.endpoint == serverInfo1.endpoint).Should().BeLessOrEqualTo(1);
+             db.UpsertServerInfo(serverInfo1);
+             db.GetServers().Count(x => x.endpoint == serverInfo1.endpoint).Should().Be(1);
+           });
+          while (!iterations.IsCompleted)
           {
-            var iterations = Parallel.For(0, 1000, _ =>
-             {
-               db.GetServers().Count(x => x.endpoint == serverInfo1.endpoint).Should().BeLessOrEqualTo(1);
-               db.AddServerInfo(serverInfo1);
-               db.GetServers().Count(x => x.endpoint == serverInfo1.endpoint).Should().Be(1);
-             });
-            while (!iterations.IsCompleted)
-            {
-              Thread.Sleep(100);
-            }
-            var result = db.GetServers().ToArray();
-            result.Length.ShouldBeEquivalentTo(1);
-            result[0].Equal(serverInfo1).Should().BeTrue();
+            Thread.Sleep(100);
           }
+          var result = db.GetServers().ToArray();
+          result.Length.ShouldBeEquivalentTo(1);
+          result[0].Should().Be(serverInfo1);
         }
     }
 
@@ -155,7 +151,7 @@ namespace Kontur.GameStats.Server.Tests.Database
             var iterations = Parallel.For(0, 1000, i =>
              {
                if (i % 2 == 0)
-                 db.AddServerInfo(serverInfo1);
+                 db.UpsertServerInfo(serverInfo1);
                else
                  db.GetServers().Count().Should().BeLessOrEqualTo(1);
              });
@@ -165,7 +161,7 @@ namespace Kontur.GameStats.Server.Tests.Database
             }
             var result = db.GetServers().ToArray();
             result.Length.ShouldBeEquivalentTo(1);
-            result[0].Equal(serverInfo1).Should().BeTrue();
+            result[0].Should().Be(serverInfo1);
           }
         }
     }

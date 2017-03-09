@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\TempFile.cs" />
+    <Compile Include="Database\WhenWorkWithMatchInfo_DbAdapterShould.cs" />
     <Compile Include="Database\WhenWorkWithServerInfo_DbAdapterShould.cs" />
     <Compile Include="Modules\GetDataModuleShould.cs" />
     <Compile Include="Modules\GetStatisticModuleShould.cs" />

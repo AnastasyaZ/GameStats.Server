@@ -62,9 +62,9 @@
     <Compile Include="Database\IDatabaseAdapter.cs" />
     <Compile Include="Database\LiteDbAdapter.cs" />
     <Compile Include="Database\SingletonLiteDbAdapter.cs" />
-    <Compile Include="DataModels\ComparisonExtensions.cs" />
     <Compile Include="DataModels\GameServer.cs" />
     <Compile Include="DataModels\GameServerInfo.cs" />
+    <Compile Include="DataModels\Helpers.cs" />
     <Compile Include="DataModels\MatchInfo.cs" />
     <Compile Include="DataModels\MatchResult.cs" />
     <Compile Include="DataModels\PlayersResult.cs" />

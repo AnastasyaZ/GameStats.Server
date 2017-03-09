@@ -6,6 +6,11 @@ namespace Kontur.GameStats.Server.Database
 {
   public class SingletonLiteDbAdapter : IDatabaseAdapter
   {
+    /// <summary>
+    /// Рекомендация автора по работе в LiteDB.
+    /// Так можно потому что она thread-safe и одновременно умеет поддерживать только одно соединение с файлом. 
+    /// Создание одного экземпляра позволяет не тратить время на подключение и использовать закешированные данные.
+    /// </summary>
     private static readonly LiteDbAdapter Database;
 
     static SingletonLiteDbAdapter()
@@ -13,7 +18,7 @@ namespace Kontur.GameStats.Server.Database
       Database = new LiteDbAdapter("MyDatabase.db");//TODO Say No To Hardcode!!
     }
 
-    public void AddServerInfo(GameServerInfo server) => Database.AddServerInfo(server);
+    public void UpsertServerInfo(GameServerInfo server) => Database.UpsertServerInfo(server);
 
     public void AddMatchInfo(MatchInfo match) => Database.AddMatchInfo(match);
 
@@ -24,19 +29,6 @@ namespace Kontur.GameStats.Server.Database
     public IEnumerable<GameServerInfo> GetServers() => Database.GetServers();
 
     public IEnumerable<MatchInfo> GetMatches(string endpoint) => Database.GetMatches(endpoint);
-
-    #region Dispose
-
-    public void Dispose()
-    {
-      DisposeManagedResources();
-    }
-
-    private void DisposeManagedResources()
-    {
-      Database.Dispose();
-    }
-
-    #endregion
+    
   }
 }
