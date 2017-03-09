@@ -16,7 +16,7 @@ namespace Kontur.GameStats.Server.Modules
 
     public NancyTestModule()
     {
-      //Get["/"] = _ => "Hello, Nancy is working.";
+      //Get["/ex"] = _ => { throw new NotFoundErrorException();};
       Get["/get_json"] = _
           => Response.AsJson(new JsonModel { intField = 5, stringField = "fgds" });
       Post["/post_json"] = _ =>

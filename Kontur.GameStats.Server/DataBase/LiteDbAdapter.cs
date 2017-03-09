@@ -9,10 +9,8 @@ namespace Kontur.GameStats.Server.Database
   {
     private readonly LiteDatabase database;
 
-    private LiteCollection<GameServerInfo> getServers => database.GetCollection<GameServerInfo>("GameServerInfo"); //TODO remove hardcode
-    private LiteCollection<MatchInfo> getMatches => database.GetCollection<MatchInfo>("MatchInfo");
-
-    private readonly object lockObj = new object();
+    private LiteCollection<GameServerInfo> servers => database.GetCollection<GameServerInfo>();
+    private LiteCollection<MatchInfo> matches => database.GetCollection<MatchInfo>();
 
     public LiteDbAdapter(string filename)
     {
@@ -21,12 +19,11 @@ namespace Kontur.GameStats.Server.Database
 
     public void AddServerInfo(GameServerInfo server)
     {
-      lock (lockObj)
-      {
-        var servers = getServers;
-        servers.Delete(x => x.endpoint == server.endpoint);
-        servers.Insert(server);
-      }
+        using (var tr = database.BeginTrans())
+        {
+          servers.Upsert(server.endpoint, server);
+          tr.Commit();
+        }
     }
 
     public void AddMatchInfo(MatchInfo match)
@@ -36,7 +33,7 @@ namespace Kontur.GameStats.Server.Database
 
     public GameServerInfo GetServerInfo(string endpoint)
     {
-      return getServers.FindOne(x => x.endpoint == endpoint);
+      return servers.FindOne(x => x.endpoint == endpoint);
     }
 
     public MatchInfo GetMatchInfo(string endpoint, DateTime timestamp)
@@ -46,7 +43,7 @@ namespace Kontur.GameStats.Server.Database
 
     public IEnumerable<GameServerInfo> GetServers()
     {
-      return getServers.FindAll();
+      return servers.FindAll();
     }
 
     public IEnumerable<MatchInfo> GetMatches(string endpoint)

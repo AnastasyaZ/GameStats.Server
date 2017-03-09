@@ -4,8 +4,13 @@ namespace Kontur.GameStats.Server.DataModels
 {
   public class GameServerInfo
   {
-    [BsonIndex]
+    [BsonIndex, BsonId]
     public string endpoint { get; set; }
     public GameServer gameServer { get; set; }
+
+    public override string ToString()
+    {
+      return $"endpoint: {endpoint}";
+    }
   }
 }

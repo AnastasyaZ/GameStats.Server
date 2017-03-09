@@ -8,7 +8,7 @@ namespace Kontur.GameStats.Server.DataModels
     {
       if (ReferenceEquals(null, other)) return false;
       if (ReferenceEquals(target, other)) return true;
-      return string.Equals(target.endpoint, other.endpoint) && target.gameServer.Equal(other.gameServer);
+      return string.Equals(target.endpoint, other.endpoint)/* && target.gameServer.Equal(other.gameServer)*/;
     }
 
     public static bool Equal(this GameServer target, GameServer other)
