@@ -9,7 +9,9 @@ namespace Kontur.GameStats.Server.DataModels
     public int fragLimit { get; set; }
     public int timeLimit { get; set; }
     public double timeElapsed { get; set; }
-    public PlayersResult[] scoreboard { get; set; }
+    public PlayerResult[] scoreboard { get; set; }
+
+    public PlayerResult winner => scoreboard[0];
 
     #region equality members
 

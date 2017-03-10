@@ -2,7 +2,7 @@
 
 namespace Kontur.GameStats.Server.DataModels
 {
-  public class ServersStatistic:IEquatable<ServersStatistic>
+  public class ServerStatistic:IEquatable<ServerStatistic>
   {
     public int totalMatchesPlayed { get; set; }
     public int maximumMatchesPerDay { get; set; }
@@ -14,7 +14,7 @@ namespace Kontur.GameStats.Server.DataModels
 
     #region equality members
 
-    public bool Equals(ServersStatistic other)
+    public bool Equals(ServerStatistic other)
     {
       if (ReferenceEquals(null, other)) return false;
       if (ReferenceEquals(this, other)) return true;
@@ -32,7 +32,7 @@ namespace Kontur.GameStats.Server.DataModels
       if (ReferenceEquals(null, obj)) return false;
       if (ReferenceEquals(this, obj)) return true;
       if (obj.GetType() != this.GetType()) return false;
-      return Equals((ServersStatistic) obj);
+      return Equals((ServerStatistic) obj);
     }
 
     public override int GetHashCode()

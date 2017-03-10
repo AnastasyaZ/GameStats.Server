@@ -43,14 +43,14 @@ namespace Kontur.GameStats.Server.Tests.Modules
         timeElapsed = 12.345678,
         scoreboard = new[]
           {
-                    new PlayersResult
+                    new PlayerResult
                     {
                         name = "Player1",
                         frags = 20,
                         kills = 21,
                         deaths = 3
                     },
-                    new PlayersResult
+                    new PlayerResult
                     {
                         name = "Player2",
                         frags = 2,

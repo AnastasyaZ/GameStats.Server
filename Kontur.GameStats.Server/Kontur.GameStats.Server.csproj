@@ -67,9 +67,9 @@
     <Compile Include="DataModels\Helpers.cs" />
     <Compile Include="DataModels\MatchInfo.cs" />
     <Compile Include="DataModels\MatchResult.cs" />
-    <Compile Include="DataModels\PlayersResult.cs" />
-    <Compile Include="DataModels\PlayersStatistic.cs" />
-    <Compile Include="DataModels\ServersStatistic.cs" />
+    <Compile Include="DataModels\PlayerResult.cs" />
+    <Compile Include="DataModels\PlayerStatistic.cs" />
+    <Compile Include="DataModels\ServerStatistic.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Modules\GetDataModule.cs" />
     <Compile Include="Modules\GetStatisticModule.cs" />

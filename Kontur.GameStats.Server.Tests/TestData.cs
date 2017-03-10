@@ -59,14 +59,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 12.345678,
           scoreboard = new[]
           {
-            new PlayersResult()
+            new PlayerResult()
             {
               name = "Player1",
               frags = 20,
               kills = 21,
               deaths = 3
             },
-            new PlayersResult()
+            new PlayerResult()
             {
               name = "Player2",
               frags = 2,
@@ -89,14 +89,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 7.4564231,
           scoreboard = new[]
           {
-            new PlayersResult()
+            new PlayerResult()
             {
               name = "Max",
               frags = 14,
               kills = 29,
               deaths = 15
             },
-            new PlayersResult()
+            new PlayerResult()
             {
               name = "Nux",
               frags = 15,
