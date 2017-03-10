@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading;
-
-namespace LiteDB
+﻿namespace LiteDB
 {
     /// <summary>
     /// Used to control lock state. Based on SQLite

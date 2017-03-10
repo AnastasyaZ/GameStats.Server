@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LiteDB
+﻿namespace LiteDB
 {
     /// <summary>
     /// Represent a extra data page that contains the object when is not possible store in DataPage (bigger then  PAGE_SIZE or on update has no more space on page)

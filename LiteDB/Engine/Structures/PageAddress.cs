@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LiteDB
+﻿namespace LiteDB
 {
     /// <summary>
     /// Represents a page address inside a page structure - index could be byte offset position OR index in a list (6 bytes)

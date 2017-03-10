@@ -1,7 +1,6 @@
 ﻿using System.Resources;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("LiteDB")]
 [assembly: AssemblyDescription("LiteDB - A lightweight embedded .NET NoSQL document store in a single datafile")]

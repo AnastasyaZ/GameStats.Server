@@ -12,40 +12,6 @@ namespace Kontur.GameStats.Server.Tests.Database
   [TestFixture]
   public class WhenWorkWithServerInfo_DbAdapterShould
   {
-    #region models for testing
-
-    private readonly GameServerInfo serverInfo1 = new GameServerInfo
-    {
-      endpoint = "kontur.ru-1024",
-      gameServer = new GameServer
-      {
-        name = "] My P3rfect GameServer [",
-        gameModes = new[] { "DM", "TDM" }
-      }
-    };
-
-    private readonly GameServerInfo serverInfo2 = new GameServerInfo
-    {
-      endpoint = "192.168.35.38-5454",
-      gameServer = new GameServer
-      {
-        name = "LocalServer",
-        gameModes = new[] { "SM", "OPM", "DM" }
-      }
-    };
-
-    private readonly GameServerInfo serverInfo3 = new GameServerInfo
-    {
-      endpoint = "geeks-games.com-2048",
-      gameServer = new GameServer
-      {
-        name = "GG", //todo remove
-        gameModes = new[] { "DM" }
-      }
-    };
-
-    #endregion
-
     [Test]
     public void ReturnAddedRecords()
     {
@@ -53,10 +19,10 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          db.UpsertServerInfo(serverInfo1);
-          var result = db.GetServerInfo(serverInfo1.endpoint);
+          db.UpsertServerInfo(TestData.Server);
+          var result = db.GetServerInfo(TestData.Server.endpoint);
 
-          result.ShouldBeEquivalentTo(serverInfo1);
+          result.ShouldBeEquivalentTo(TestData.Server);
         }
       }
     }
@@ -68,7 +34,7 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          IList<GameServerInfo> serverInfos = new[] { serverInfo1, serverInfo2, serverInfo3 };
+          IList<GameServerInfo> serverInfos = TestData.Servers;
           foreach (var info in serverInfos)
           {
             db.UpsertServerInfo(info);
@@ -88,13 +54,13 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          db.UpsertServerInfo(serverInfo1);
+          db.UpsertServerInfo(TestData.Server);
         }
 
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          var result = db.GetServerInfo(serverInfo1.endpoint);
-          result.ShouldBeEquivalentTo(serverInfo1);
+          var result = db.GetServerInfo(TestData.Server.endpoint);
+          result.ShouldBeEquivalentTo(TestData.Server);
         }
       }
     }
@@ -107,13 +73,13 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         for (var i = 0; i < 10; i++)
         {
-          db.UpsertServerInfo(serverInfo1);
-          db.UpsertServerInfo(new GameServerInfo { endpoint = serverInfo1.endpoint, gameServer = new GameServer() });
-          db.UpsertServerInfo(serverInfo1);
+          db.UpsertServerInfo(TestData.Server);
+          db.UpsertServerInfo(new GameServerInfo { endpoint = TestData.Server.endpoint, gameServer = new GameServer() });
+          db.UpsertServerInfo(TestData.Server);
         }
         var result = db.GetServers().ToArray();
         result.Length.ShouldBeEquivalentTo(1);
-        result[0].Should().Be(serverInfo1);
+        result[0].Should().Be(TestData.Server);
       }
     }
 
@@ -126,9 +92,9 @@ namespace Kontur.GameStats.Server.Tests.Database
         {
           var iterations = Parallel.For(0, 1000, _ =>
            {
-             db.GetServers().Count(x => x.endpoint == serverInfo1.endpoint).Should().BeLessOrEqualTo(1);
-             db.UpsertServerInfo(serverInfo1);
-             db.GetServers().Count(x => x.endpoint == serverInfo1.endpoint).Should().Be(1);
+             db.GetServers().Count(x => x.endpoint == TestData.Server.endpoint).Should().BeLessOrEqualTo(1);
+             db.UpsertServerInfo(TestData.Server);
+             db.GetServers().Count(x => x.endpoint == TestData.Server.endpoint).Should().Be(1);
            });
           while (!iterations.IsCompleted)
           {
@@ -136,7 +102,7 @@ namespace Kontur.GameStats.Server.Tests.Database
           }
           var result = db.GetServers().ToArray();
           result.Length.ShouldBeEquivalentTo(1);
-          result[0].Should().Be(serverInfo1);
+          result[0].Should().Be(TestData.Server);
         }
     }
 
@@ -151,7 +117,7 @@ namespace Kontur.GameStats.Server.Tests.Database
             var iterations = Parallel.For(0, 1000, i =>
              {
                if (i % 2 == 0)
-                 db.UpsertServerInfo(serverInfo1);
+                 db.UpsertServerInfo(TestData.Server);
                else
                  db.GetServers().Count().Should().BeLessOrEqualTo(1);
              });
@@ -161,7 +127,7 @@ namespace Kontur.GameStats.Server.Tests.Database
             }
             var result = db.GetServers().ToArray();
             result.Length.ShouldBeEquivalentTo(1);
-            result[0].Should().Be(serverInfo1);
+            result[0].Should().Be(TestData.Server);
           }
         }
     }

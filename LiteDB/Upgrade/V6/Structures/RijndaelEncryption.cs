@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using System.IO;
 using System.Text;
-using LiteDB;
 
 namespace LiteDB_V6
 {

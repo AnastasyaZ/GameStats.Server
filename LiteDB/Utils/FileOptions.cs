@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LiteDB
+﻿namespace LiteDB
 {
     /// <summary>
     /// Datafile open options (for FileDiskService)

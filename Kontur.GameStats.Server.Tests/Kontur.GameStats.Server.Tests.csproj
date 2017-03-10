@@ -72,6 +72,7 @@
     <Compile Include="Modules\NancyTestModuleShould.cs" />
     <Compile Include="Modules\PutDataModuleShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

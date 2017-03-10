@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LiteDB_V6
+﻿namespace LiteDB_V6
 {
     internal enum PageType { Empty = 0, Header = 1, Collection = 2, Index = 3, Data = 4, Extend = 5 }
 

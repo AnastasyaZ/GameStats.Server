@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LiteDB
+﻿namespace LiteDB
 {
     public partial class LiteEngine
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LiteDB
+﻿namespace LiteDB
 {
     /// <summary>
     /// Represent a index information
