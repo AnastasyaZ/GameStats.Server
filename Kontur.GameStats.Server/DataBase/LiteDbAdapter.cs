@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using Kontur.GameStats.Server.DataModels;
 using LiteDB;
 
@@ -11,6 +13,20 @@ namespace Kontur.GameStats.Server.Database
 
     private LiteCollection<GameServerInfo> servers => database.GetCollection<GameServerInfo>();
     private LiteCollection<MatchInfo> matches => database.GetCollection<MatchInfo>();
+
+    public LiteDbAdapter()
+    {
+      var directory = ConfigurationManager.AppSettings["database_directory"];
+      var filename = ConfigurationManager.AppSettings["database_filename"];
+
+      var exists = Directory.Exists(directory);
+      if (!exists)
+        Directory.CreateDirectory(directory);
+
+      var path = Path.Combine(directory, filename);
+
+      database = new LiteDatabase(path);
+    }
 
     public LiteDbAdapter(string filename)
     {
