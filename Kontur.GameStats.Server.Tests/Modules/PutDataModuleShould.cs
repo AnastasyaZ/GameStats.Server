@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Kontur.GameStats.Server.DataModels;
 using Kontur.GameStats.Server.Modules;
 using Nancy;
 using Nancy.Testing;
@@ -14,19 +13,16 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [SetUp]
     public void SetUp()
     {
-      browser = new Browser(with => with.Module<PutDataModule>());
+      browser = new Browser(new BootstrapperForSingletoneDbAdapter());
     }
 
     [Test]
     public void ReturnOK_OnCorrectAdverticeRequest()
     {
-      var model = new GameServer
-      {
-        name = "] My P3rfect GameServer [",
-        gameModes = new[] { "DM", "TDM" }
-      };
+      var endpoint = TestData.Server.endpoint;
+      var server = TestData.Server.gameServer;
 
-      var responce = browser.Put("/servers/kontur.ru-1024/Info1", with => with.JsonBody(model));
+      var responce = browser.Put($"/servers/{endpoint}/info", with => with.JsonBody(server));
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
     }
@@ -34,36 +30,31 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [Test]
     public void ReturnBadRequest_OnMatchesRequestFromUnknownServer()
     {
-      var model = new MatchResult
-      {
-        map = "DM-HelloWorld",
-        gameModel = "DM",
-        fragLimit = 20,
-        timeLimit = 20,
-        timeElapsed = 12.345678,
-        scoreboard = new[]
-          {
-                    new PlayerResult
-                    {
-                        name = "Player1",
-                        frags = 20,
-                        kills = 21,
-                        deaths = 3
-                    },
-                    new PlayerResult
-                    {
-                        name = "Player2",
-                        frags = 2,
-                        kills = 2,
-                        deaths = 21
-                    }
-                }
-      };
+      var endpoint = TestData.Match.endpoint;
+      var timestamp = TestData.Match.timestamp.ToUniversalTime().ToString("s");
+      var match = TestData.Match.result;
 
-      var responce = browser.Put("/servers/kontur.ru-1024/matches/2017-01-22T15:17:00Z",
-          with => with.JsonBody(model));
+
+      var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
+          with => with.JsonBody(match));
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadGateway);
+    }
+
+    [Test]
+    public void ReturnOK_OnMatchesRequestFromKnownServer()
+    {
+      var endpoint = TestData.Match.endpoint;
+      var server = TestData.Server.gameServer;
+      var timestamp = TestData.Match.timestamp.ToUniversalTime().ToString("s");
+      var match = TestData.Match.result;
+
+      browser.Put($"/servers/{endpoint}/info", with => with.JsonBody(server));
+
+      var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
+          with => with.JsonBody(match));
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
     }
   }
 }

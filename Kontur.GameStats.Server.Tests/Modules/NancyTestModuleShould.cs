@@ -49,5 +49,11 @@ namespace Kontur.GameStats.Server.Tests.Modules
       response.Body.AsString().ShouldBeEquivalentTo(
       $"Get model: stringField={model.stringField}, intField={model.intField}");
     }
+
+    [Test]
+    public void Get_Async()
+    {
+      
+    }
   }
 }

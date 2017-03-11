@@ -86,11 +86,11 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void DoNotAddNewRecords_IfServerAlreadyAdded_InParallelThreads()
     {
-      for (var i = 0; i < 100; i++)
+      //for (var i = 0; i < 100; i++)
         using (var file = new TempFile())
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          var iterations = Parallel.For(0, 1000, _ =>
+          var iterations = Parallel.For(0, 100, _ =>
            {
              db.GetServers().Count(x => x.endpoint == TestData.Server.endpoint).Should().BeLessOrEqualTo(1);
              db.UpsertServerInfo(TestData.Server);
@@ -109,12 +109,12 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void ReadAndWrite_InParallelThreads()
     {
-      for (var j = 0; j < 100; j++)
+      //for (var j = 0; j < 100; j++)
         using (var file = new TempFile())
         {
           using (var db = new LiteDbAdapter(file.Filename))
           {
-            var iterations = Parallel.For(0, 1000, i =>
+            var iterations = Parallel.For(0, 100, i =>
              {
                if (i % 2 == 0)
                  db.UpsertServerInfo(TestData.Server);

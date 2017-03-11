@@ -34,7 +34,7 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void AddAllRecords_Parallel()
     {
-      for (var i = 0; i < 100; i++)
+      //for (var i = 0; i < 100; i++)
       {
         var matches = TestData.Matches;
         using (var file = new TempFile())
@@ -42,10 +42,10 @@ namespace Kontur.GameStats.Server.Tests.Database
         {
           Parallel.ForEach(matches, x =>
           {
-            var rnd = new Random();
-            Thread.Sleep(rnd.Next(100));
+            //var rnd = new Random();
+            //Thread.Sleep(rnd.Next(100));
             db.AddMatchInfo(x);
-            Thread.Sleep(rnd.Next(100));
+            //Thread.Sleep(rnd.Next(100));
             var y = db.GetMatches(x.endpoint).First();
             var z = db.GetMatchInfo(x.endpoint, x.timestamp);
             x.ShouldBeEquivalentTo(y);
