@@ -10,7 +10,9 @@ namespace Kontur.GameStats.Server.Modules
     protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
     {
       base.ApplicationStartup(container, pipelines);
-      container.Register<IDatabaseAdapter, SingletonLiteDbAdapter>();
+      container.Register<IDatabaseAdapter, SingletonLiteDbAdapter>().AsSingleton();
     }
+
+
   }
 }

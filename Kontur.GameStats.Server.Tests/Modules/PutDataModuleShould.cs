@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.Configuration;
+using System.IO;
+using FluentAssertions;
 using Kontur.GameStats.Server.Modules;
 using Nancy;
 using Nancy.Testing;
@@ -9,11 +11,30 @@ namespace Kontur.GameStats.Server.Tests.Modules
   public class PutDataModuleShould
   {
     private Browser browser;
+    private BootstrapperForSingletoneDbAdapter bootstrapper;
 
     [SetUp]
     public void SetUp()
     {
-      browser = new Browser(new BootstrapperForSingletoneDbAdapter());
+      bootstrapper = new BootstrapperForSingletoneDbAdapter();
+      browser = new Browser(bootstrapper);
+    }
+
+    [OneTimeTearDown]
+    public void Cleanup()
+    {
+      bootstrapper.Dispose();
+      var directory= ConfigurationManager.AppSettings["database_directory"];
+      ClearDirectory(directory);
+    }
+
+    private void ClearDirectory(string path)
+    {
+      var dir = new DirectoryInfo(path);
+      foreach (var file in dir.GetFiles())
+      {
+        file.Delete();
+      }
     }
 
     [Test]

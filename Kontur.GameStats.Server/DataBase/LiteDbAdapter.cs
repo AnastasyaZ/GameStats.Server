@@ -5,7 +5,7 @@ using LiteDB;
 
 namespace Kontur.GameStats.Server.Database
 {
-  public sealed class LiteDbAdapter : IDatabaseAdapter, IDisposable
+  public sealed class LiteDbAdapter : IDatabaseAdapter
   {
     private readonly LiteDatabase database;
 

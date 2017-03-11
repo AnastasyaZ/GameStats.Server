@@ -4,7 +4,7 @@ using Kontur.GameStats.Server.DataModels;
 
 namespace Kontur.GameStats.Server.Database
 {
-  public interface IDatabaseAdapter
+  public interface IDatabaseAdapter : IDisposable
   {
     void UpsertServerInfo(GameServerInfo server);
     void AddMatchInfo(MatchInfo match);

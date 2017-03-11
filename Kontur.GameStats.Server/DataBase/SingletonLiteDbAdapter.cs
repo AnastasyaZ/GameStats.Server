@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using Kontur.GameStats.Server.DataModels;
 
 namespace Kontur.GameStats.Server.Database
@@ -15,7 +17,16 @@ namespace Kontur.GameStats.Server.Database
 
     static SingletonLiteDbAdapter()
     {
-      Database = new LiteDbAdapter("MyDatabase.db");//TODO Say No To Hardcode!!
+      var directory = ConfigurationManager.AppSettings["database_directory"];
+      var filename = ConfigurationManager.AppSettings["database_filename"];
+
+      var exists = Directory.Exists(directory);
+      if (!exists)
+        Directory.CreateDirectory(directory);
+
+      var path = Path.Combine(directory, filename);
+
+      Database = new LiteDbAdapter(path);
     }
 
     public void UpsertServerInfo(GameServerInfo server) => Database.UpsertServerInfo(server);
@@ -29,6 +40,20 @@ namespace Kontur.GameStats.Server.Database
     public IEnumerable<GameServerInfo> GetServers() => Database.GetServers();
 
     public IEnumerable<MatchInfo> GetMatches(string endpoint) => Database.GetMatches(endpoint);
-    
+
+
+    #region Dispose
+
+    public void Dispose()
+    {
+      DisposeManagedResources();
+    }
+
+    private void DisposeManagedResources()
+    {
+      Database.Dispose();
+    }
+
+    #endregion
   }
 }

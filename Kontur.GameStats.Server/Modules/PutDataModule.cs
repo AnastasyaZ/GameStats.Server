@@ -48,7 +48,6 @@ namespace Kontur.GameStats.Server.Modules
       var task = new Task(s =>
         {
           handler.PutServer(server);
-          throw new Exception();
         }, server);
       task.Start();
       return task;
