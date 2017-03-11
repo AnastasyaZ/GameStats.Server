@@ -1,6 +1,7 @@
 ﻿using System;
 using Fclp;
-using Nancy.Hosting.Self;
+using Microsoft.Owin.Hosting;
+using Owin;
 
 namespace Kontur.GameStats.Server
 {
@@ -29,11 +30,18 @@ namespace Kontur.GameStats.Server
 
     private static void RunServer(Options options)
     {
-      var config = new HostConfiguration { UrlReservations = { CreateAutomatically = true } };
-      using (var host = new NancyHost(config, new Uri(options.Prefix)))
+      using (WebApp.Start<Startup>(options.Prefix))
       {
-        host.Start();
+        Console.WriteLine($"Running on {options.Prefix}");
         Console.ReadKey(true);
+      }
+    }
+
+    public class Startup
+    {
+      public void Configuration(IAppBuilder app)
+      {
+        app.UseNancy();
       }
     }
 
