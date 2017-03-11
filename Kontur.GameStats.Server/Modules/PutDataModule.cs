@@ -5,12 +5,14 @@ using Kontur.GameStats.Server.DataModels;
 using Kontur.GameStats.Server.RequestHandlers;
 using Nancy;
 using Nancy.ModelBinding;
+using NLog;
 
 namespace Kontur.GameStats.Server.Modules
 {
   public class PutDataModule : NancyModule
   {
     private readonly PutDataHandler handler;
+    private Logger logger = LogManager.GetCurrentClassLogger();
 
     public PutDataModule(IDatabaseAdapter database)
     {
@@ -31,7 +33,7 @@ namespace Kontur.GameStats.Server.Modules
         }
         catch (Exception e)
         {
-          //TODO Log
+          logger.Error(e.Message);
           return HttpStatusCode.InternalServerError;
         }
         return HttpStatusCode.OK;
@@ -48,6 +50,7 @@ namespace Kontur.GameStats.Server.Modules
       var task = new Task(s =>
         {
           handler.PutServer(server);
+          throw new ApplicationException("my custom msg");
         }, server);
       task.Start();
       return task;

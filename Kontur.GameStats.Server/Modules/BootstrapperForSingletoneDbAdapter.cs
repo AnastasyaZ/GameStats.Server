@@ -12,7 +12,5 @@ namespace Kontur.GameStats.Server.Modules
       base.ApplicationStartup(container, pipelines);
       container.Register<IDatabaseAdapter, SingletonLiteDbAdapter>().AsSingleton();
     }
-
-
   }
 }

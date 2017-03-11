@@ -20,7 +20,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
       browser = new Browser(bootstrapper);
     }
 
-    [OneTimeTearDown]
+    [TearDown]
     public void Cleanup()
     {
       bootstrapper.Dispose();
