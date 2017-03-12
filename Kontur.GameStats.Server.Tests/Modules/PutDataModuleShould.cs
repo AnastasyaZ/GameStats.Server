@@ -13,14 +13,14 @@ namespace Kontur.GameStats.Server.Tests.Modules
     private Browser browser;
     private BootstrapperForSingletoneDbAdapter bootstrapper;
 
-    [OneTimeSetUp]
+    [SetUp]
     public void SetUp()
     {
       bootstrapper = new BootstrapperForSingletoneDbAdapter();
       browser = new Browser(bootstrapper);
     }
 
-    [OneTimeTearDown]
+    [TearDown]
     public void Cleanup()
     {
       bootstrapper.Dispose();
@@ -61,22 +61,6 @@ namespace Kontur.GameStats.Server.Tests.Modules
     }
 
     [Test]
-    [Ignore("not implemented")]
-    public void ReturnBadRequest_OnMatchesRequestFromUnknownServer()
-    {
-      var endpoint = TestData.Match.endpoint;
-      var timestamp = TestData.Match.timestamp.ToUniversalTime().ToString("s");
-      var match = TestData.Match.result;
-
-
-      var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
-          with => with.JsonBody(match));
-
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadGateway);
-    }
-
-    [Test]
-    [Ignore("not implemented")]
     public void ReturnOK_OnMatchesRequestFromKnownServer()
     {
       var endpoint = TestData.Match.endpoint;
@@ -87,15 +71,44 @@ namespace Kontur.GameStats.Server.Tests.Modules
       browser.Put($"/servers/{endpoint}/info", with => with.JsonBody(server));
 
       var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
-          with => with.JsonBody(match));
+        with => with.JsonBody(match));
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
     }
 
     [Test]
-    [Ignore("not implemented")]
-    public void ReturnBadRequest_OnIncorrectTimestamp()
+    public void ReturnBadRequest_OnMatchesRequestFromUnknownServer()
     {
+      var endpoint = TestData.Match.endpoint;
+      var timestamp = TestData.Match.timestamp.ToUniversalTime().ToString("s");
+      var match = TestData.Match.result;
+
+
+      var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
+          with => with.JsonBody(match));
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotAcceptable);
+    }
+
+    [Ignore("not implemented")]
+    [TestCase("2009-06-15T13:45:30")]
+    [TestCase("6/15/2009")]
+    [TestCase("2009-06-15T13:45:30.0000000-07:00")]
+    [TestCase("2009-06-15T13:45:30.0000000Z")]
+    [TestCase(" 2009-06-15T13:45:30")]
+    [TestCase("2009-06-15 13:45:30Z")]
+    public void ReturnBadRequest_OnIncorrectTimestamp(string timestamp)
+    {
+      var endpoint = TestData.Match.endpoint;
+      var server = TestData.Server.gameServer;
+      var match = TestData.Match.result;
+
+      browser.Put($"/servers/{endpoint}/info", with => with.JsonBody(server));
+
+      var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
+        with => with.JsonBody(match));
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadRequest);
     }
 
     [Test]
@@ -118,5 +131,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
     //TODO add test for incorrect only one field in model
     //TODO check elements of arrays also
     //TODO check string on null/empty
+    //TODO add check fir incorrect endpoint and timestamp
+    //TODO DRY in testcases
   }
 }
