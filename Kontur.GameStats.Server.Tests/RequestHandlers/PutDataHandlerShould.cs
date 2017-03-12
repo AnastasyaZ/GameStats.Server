@@ -13,7 +13,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
   public class PutDataHandlerShould
   {
     private PutDataHandler handler;
-    private LiteDbAdapter db;
+    private IDatabaseAdapter db;
     private TempFile file;
 
     private GameServerInfo server = TestData.Server;

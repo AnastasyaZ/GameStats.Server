@@ -24,22 +24,40 @@ namespace Kontur.GameStats.Server.Modules
         var model = this.Bind<JsonModel>();
         return $"Get model: stringField={model.stringField}, intField={model.intField}";
       };
-      Get["/nancy/{index}", true] = async (x, ct) => { await DoingWorkInThread(x.index); return HttpStatusCode.OK; };
+      Get["/nancy/{index}", true] = async (x, ct) =>
+      {
+        var res=await DoingWorkInThread(x.index);
+        return res;
+      };
       Get["/nancy"] = _ => "Hello, Nancy is working.";
     }
 
-    private Task<string> DoingWorkInThread(string index)
+    private Task<HttpStatusCode> DoingWorkInThread(int index)
     {
-      var task = new Task<string>(n =>
+      var task = new Task<HttpStatusCode>(n =>
       {
-        Console.WriteLine($"Task #{n} is started in {Thread.CurrentThread.ManagedThreadId} thread.");
-        var rnd = new Random();
-        Thread.Sleep(rnd.Next(10, 200));
-        Console.WriteLine($"Task #{n} ended in {Thread.CurrentThread.ManagedThreadId} thread.");
-        return $"Task #{n} ended in {Thread.CurrentThread.ManagedThreadId} thread.";
+        try
+        {
+          Foo((int)n);
+        }
+        catch (Exception e)
+        {
+          return HttpStatusCode.InternalServerError;
+        }
+        return HttpStatusCode.OK;
       }, index);
       task.Start();
       return task;
+    }
+
+    private string Foo(int n)
+    {
+      Console.WriteLine($"Task #{n} is started in {Thread.CurrentThread.ManagedThreadId} thread.");
+      var rnd = new Random();
+      Thread.Sleep(rnd.Next(10, 200));
+      //throw new Exception();
+      Console.WriteLine($"Task #{n} ended in {Thread.CurrentThread.ManagedThreadId} thread.");
+      return $"Task #{n} ended in {Thread.CurrentThread.ManagedThreadId} thread.";
     }
   }
 }

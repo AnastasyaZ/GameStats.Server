@@ -37,6 +37,10 @@
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentValidation, Version=6.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.6.4.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -55,6 +59,10 @@
     </Reference>
     <Reference Include="Nancy.Owin, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.Owin.1.4.1\lib\net40\Nancy.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy.Validation.FluentValidation, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nancy.Validation.FluentValidation.1.4.1\lib\net40\Nancy.Validation.FluentValidation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -78,7 +86,6 @@
   <ItemGroup>
     <Compile Include="Database\IDatabaseAdapter.cs" />
     <Compile Include="Database\LiteDbAdapter.cs" />
-    <Compile Include="Database\SingletonLiteDbAdapter.cs" />
     <Compile Include="DataModels\GameServer.cs" />
     <Compile Include="DataModels\GameServerInfo.cs" />
     <Compile Include="DataModels\Helpers.cs" />
@@ -87,6 +94,8 @@
     <Compile Include="DataModels\PlayerResult.cs" />
     <Compile Include="DataModels\PlayerStatistic.cs" />
     <Compile Include="DataModels\ServerStatistic.cs" />
+    <Compile Include="DataModels\Validators\GameServerInfoValidator.cs" />
+    <Compile Include="DataModels\Validators\GameServerValidator.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Modules\BootstrapperForSingletoneDbAdapter.cs" />
     <Compile Include="Modules\GetDataModule.cs" />
