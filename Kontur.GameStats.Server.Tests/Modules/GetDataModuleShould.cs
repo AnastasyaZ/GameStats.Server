@@ -21,7 +21,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [Test]
     public void ReturnNotFound_OnInfoRequestFromUnknownServer()
     {
-      var responce = browser.Get("/servers/kontur.ru-1024/Info1");
+      var responce = browser.Get("/servers/kontur.ru-1024/Info");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
     }
@@ -29,7 +29,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [Test]
     public void ReturnBadRequest_OnInfoRequest()
     {
-      var responce = browser.Get("/servers/Info1");
+      var responce = browser.Get("/servers/Info");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
       responce.Body.DeserializeJson<IEnumerable<GameServerInfo>>();

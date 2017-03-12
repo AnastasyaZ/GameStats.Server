@@ -16,8 +16,8 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     private IDatabaseAdapter db;
     private TempFile file;
 
-    private GameServerInfo server = TestData.Server;
-    private MatchInfo match = TestData.Match;
+    private readonly GameServerInfo server = TestData.Server;
+    private readonly MatchInfo match = TestData.Match;
 
     [SetUp]
     public void SetUp()

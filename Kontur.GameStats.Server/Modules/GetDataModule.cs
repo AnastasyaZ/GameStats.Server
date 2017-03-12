@@ -7,12 +7,12 @@ namespace Kontur.GameStats.Server.Modules
   {
     public GetDataModule()
     {
-      Get["/servers/{endpoint}/Info1"] = _ =>
+      Get["/servers/{endpoint}/Info"] = _ =>
       {
         return HttpStatusCode.NotFound;
       };
 
-      Get["/servers/Info1"] = _ =>
+      Get["/servers/Info"] = _ =>
       {
         return Response.AsJson(new[] { new GameServerInfo() });
       };
