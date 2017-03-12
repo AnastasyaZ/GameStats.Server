@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Kontur.GameStats.Server.DataModels.Validators
+namespace Kontur.GameStats.Server.DataModels.Utilitys.Validators
 {
   public class GameServerInfoValidator:AbstractValidator<GameServerInfo>
   {

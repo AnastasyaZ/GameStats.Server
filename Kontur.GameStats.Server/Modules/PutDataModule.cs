@@ -31,31 +31,21 @@ namespace Kontur.GameStats.Server.Modules
         };
         var validationResult = this.Validate(server);
         if (!validationResult.IsValid)
+        {
+          logger.Error($"Cannot bind to GameServerInfo");
           return HttpStatusCode.BadRequest;
+        }
 
         return await AddServerInThread(server);
       };
 
       Put["/servers/{endpoint}/matches/{timestamp}"] = _ =>
       {
-        throw new NotImplementedException();
-      };
-    }
+        var match = this.Bind<MatchInfo>();
 
-    private TResult Parse<TResult>()
-      where TResult : class
-    {
-      TResult result;
-      try
-      {
-        result = this.Bind<TResult>();
-      }
-      catch (Exception e)
-      {
-        logger.Error($"Cannot bind to {typeof(TResult)}. {e.Message}");
-        return null;
-      }
-      return result;
+
+        return HttpStatusCode.NotImplemented;
+      };
     }
 
     private Task<HttpStatusCode> AddServerInThread(GameServerInfo server)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kontur.GameStats.Server.DataModels
+namespace Kontur.GameStats.Server.DataModels.Utilitys
 {
   public class Helpers
   {

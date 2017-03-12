@@ -91,5 +91,32 @@ namespace Kontur.GameStats.Server.Tests.Modules
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
     }
+
+    [Test]
+    [Ignore("not implemented")]
+    public void ReturnBadRequest_OnIncorrectTimestamp()
+    {
+    }
+
+    [Test]
+    public void ReturnBadRequest_OnIncorrectMatchResultModel()
+    {
+      var endpoint = TestData.Match.endpoint;
+      var server = TestData.Server.gameServer;
+      var timestamp = TestData.Match.timestamp.ToUniversalTime().ToString("s");
+      var notMatch = TestData.Server;
+
+      browser.Put($"/servers/{endpoint}/info", with => with.JsonBody(server));
+
+      var responce = browser.Put($"/servers/{endpoint}/matches/{timestamp}Z",
+          with => with.JsonBody(notMatch));
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadRequest);
+
+    }
+
+    //TODO add test for incorrect only one field in model
+    //TODO check elements of arrays also
+    //TODO check string on null/empty
   }
 }
