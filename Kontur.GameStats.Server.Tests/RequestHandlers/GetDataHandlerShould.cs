@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.DataModels;
+using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.RequestHandlers;
 using Kontur.GameStats.Server.Tests.Database;
 using NUnit.Framework;
@@ -57,6 +58,17 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
       db.AddMatchInfo(match);
 
       var result = handler.GetMatchResult(match.endpoint, match.timestamp);
+
+      result.ShouldBeEquivalentTo(match.result);
+    }
+
+    [Test]
+    //TODO убрать потом этот тест надо или заменить на симпатичный
+    public void ReturnStoredMatchResult_IfTimestampIsEqualButStoredInOtherObject()
+    {
+      db.AddMatchInfo(match);
+      var equalTimestamp = match.timestamp.ToUtcString().ParseInUts();
+      var result = handler.GetMatchResult(match.endpoint, equalTimestamp);
 
       result.ShouldBeEquivalentTo(match.result);
     }

@@ -1,5 +1,5 @@
-﻿using System;
-using Kontur.GameStats.Server.DataModels;
+﻿using Kontur.GameStats.Server.DataModels;
+using Kontur.GameStats.Server.DataModels.Utility;
 
 namespace Kontur.GameStats.Server.Tests
 {
@@ -49,7 +49,7 @@ namespace Kontur.GameStats.Server.Tests
       new MatchInfo()
       {
         endpoint = "kontur.ru-1024",
-        timestamp = DateTime.Parse("2017-01-22T15:17:00Z"),
+        timestamp = "2017-01-22T15:17:00Z".ParseInUts(),
         result = new MatchResult()
         {
           map = "DM-HelloWorld",
@@ -79,7 +79,7 @@ namespace Kontur.GameStats.Server.Tests
       new MatchInfo()
       {
         endpoint = "192.168.35.38-5454",
-        timestamp = DateTime.Parse("2014-10-30T00:00:00.00Z"),
+        timestamp = "2014-10-30T00:00:00.00Z".ParseInUts(),
         result = new MatchResult()
         {
           map = "Fury Road",
@@ -109,7 +109,7 @@ namespace Kontur.GameStats.Server.Tests
       new MatchInfo()
       {
         endpoint = "192.168.35.38-9090",
-        timestamp = DateTime.Parse("2014-10-30T00:00:00.00Z"),
+        timestamp = "2014-10-30T00:00:00.00Z".ParseInUts(),
       }
     };
 

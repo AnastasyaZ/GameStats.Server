@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.DataModels;
+using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.RequestHandlers;
 using Nancy;
 using Nancy.ModelBinding;
@@ -15,13 +15,11 @@ namespace Kontur.GameStats.Server.Modules
     private readonly PutDataHandler handler;
     private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-    public PutDataModule(IDatabaseAdapter database)
+    public PutDataModule(PutDataHandler handler)
     {
+      this.handler = handler;
 
-
-      handler = new PutDataHandler(database);
-
-      Put["/servers/{endpoint}/info", true] = async (x, ct) =>
+      Put["/servers/{endpoint}/info", true] = async (x, _) =>
       {
         var gameServer = this.Bind<GameServer>();
         var server = new GameServerInfo
@@ -39,13 +37,14 @@ namespace Kontur.GameStats.Server.Modules
         return await AddServerInThread(server);
       };
 
-      Put["/servers/{endpoint}/matches/{timestamp}", true] = async (x, ct) =>
+      Put["/servers/{endpoint}/matches/{timestamp}", true] = async (x, _) =>
        {
          var matchResult = this.Bind<MatchResult>();
+         string timestamp = x.timestamp;
          var matchInfo = new MatchInfo
          {
            endpoint = x.endpoint,
-           timestamp = x.timestamp,
+           timestamp = timestamp.ParseInUts(),
            result = matchResult
          };
          var validationResult = this.Validate(matchInfo);
@@ -60,7 +59,7 @@ namespace Kontur.GameStats.Server.Modules
 
     private Task<HttpStatusCode> AddServerInThread(GameServerInfo server)
     {
-      var task = new Task<HttpStatusCode>(s =>
+      var task = new Task<HttpStatusCode>(() =>
         {
           try
           {
@@ -72,14 +71,14 @@ namespace Kontur.GameStats.Server.Modules
             return HttpStatusCode.InternalServerError;
           }
           return HttpStatusCode.OK;
-        }, server);
+        });
       task.Start();
       return task;
     }
 
     private Task<HttpStatusCode> AddMatchInfoInThread(MatchInfo match)
     {
-      var task = new Task<HttpStatusCode>(s =>
+      var task = new Task<HttpStatusCode>(() => 
       {
         try
         {
@@ -91,7 +90,7 @@ namespace Kontur.GameStats.Server.Modules
           logger.Error(e.Message);
           return HttpStatusCode.InternalServerError;
         }
-      }, match);
+      });
       task.Start();
       return task;
     }

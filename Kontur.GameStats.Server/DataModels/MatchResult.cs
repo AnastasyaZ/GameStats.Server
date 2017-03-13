@@ -1,5 +1,5 @@
 ﻿using System;
-using Kontur.GameStats.Server.DataModels.Utilitys;
+using Kontur.GameStats.Server.DataModels.Utility;
 
 namespace Kontur.GameStats.Server.DataModels
 {

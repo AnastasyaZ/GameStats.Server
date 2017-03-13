@@ -1,46 +1,67 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.Modules;
 using Nancy;
 using Nancy.Testing;
 using NUnit.Framework;
 
 namespace Kontur.GameStats.Server.Tests.Modules
 {
-  public class GetDataModuleShould
+  public class GetDataModuleShould : AbstractModuleTest
   {
-    private Browser browser;
-
-    [SetUp]
-    public void SetUp()
-    {
-      browser = new Browser(with => with.Module<GetDataModule>());
-    }
-
     [Test]
     public void ReturnNotFound_OnInfoRequestFromUnknownServer()
     {
-      var responce = browser.Get("/servers/kontur.ru-1024/Info");
+      var responce = Browser.Get($"/servers/{Endpoint}/Info");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
     }
 
     [Test]
-    public void ReturnBadRequest_OnInfoRequest()
+    public void ReturnStoredServer()
     {
-      var responce = browser.Get("/servers/Info");
+      Browser.Put($"/servers/{Endpoint}/info",
+        with => with.JsonBody(Server));
 
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-      responce.Body.DeserializeJson<IEnumerable<GameServerInfo>>();
+      var response= Browser.Get($"/servers/{Endpoint}/Info");
+
+      response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+      var server=response.Body.DeserializeJson<GameServer>();
+      server.ShouldBeEquivalentTo(Server);
     }
 
     [Test]
     public void ReturnNotFound_OnUnknownMatch()
     {
-      var responce = browser.Get("/servers/kontur.ru-1024/matches/2017-01-22T15:17:00Z");
+      var responce = Browser.Get($"/servers/{Endpoint}/matches/{Timestamp}");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
+    }
+
+    [Test]
+    public void ReturnStoredMatch()
+    {
+      Browser.Put($"/servers/{Endpoint}/info",
+        with => with.JsonBody(Server));
+      Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+          with => with.JsonBody(Match));
+
+      var responce = Browser.Get($"/servers/{Endpoint}/matches/{Timestamp}");
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+      var match = responce.Body.DeserializeJson<MatchResult>();
+      match.ShouldBeEquivalentTo(Match);
+    }
+
+    //TODO а если таких два??
+
+    [Test]
+    public void ReturnOK_OnInfoRequest()
+    {
+      var responce = Browser.Get("/servers/Info");
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+      responce.Body.DeserializeJson<IEnumerable<GameServerInfo>>();//TODO
     }
   }
 }
