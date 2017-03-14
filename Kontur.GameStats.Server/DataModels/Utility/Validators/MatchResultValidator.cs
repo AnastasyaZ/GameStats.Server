@@ -7,7 +7,7 @@ namespace Kontur.GameStats.Server.DataModels.Utility.Validators
     public MatchResultValidator()
     {
       RuleFor(result => result.map).NotEmpty();
-      RuleFor(result => result.gameModel).NotEmpty();
+      RuleFor(result => result.gameMode).NotEmpty();
       RuleFor(result => result.fragLimit).NotEmpty();
       RuleFor(result => result.timeLimit).NotEmpty();
       RuleFor(result => result.timeElapsed).NotEmpty();

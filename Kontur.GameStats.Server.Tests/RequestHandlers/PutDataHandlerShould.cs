@@ -81,7 +81,8 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
       var result = handler.TryPutMatch(match);
 
       result.Should().BeTrue();
-      db.GetMatchInfo(match.endpoint, match.timestamp).ShouldBeEquivalentTo(match);
+      var r = db.GetMatchInfo(match.endpoint, match.timestamp);
+      r.ShouldBeEquivalentTo(match);
     }
 
     [TestCase("2017-01-22T15:17:00Z")]

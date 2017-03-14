@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.RequestHandlers;
 using Nancy;
 using Nancy.ModelBinding;
@@ -19,7 +18,7 @@ namespace Kontur.GameStats.Server.Modules
     {
       this.handler = handler;
 
-      Put["/servers/{endpoint}/info", true] = async (x, _) =>
+      Put["/servers/{endpoint:url}/info", true] = async (x, _) =>
       {
         var gameServer = this.Bind<GameServer>();
         var server = new GameServerInfo
@@ -37,14 +36,13 @@ namespace Kontur.GameStats.Server.Modules
         return await AddServerInThread(server);
       };
 
-      Put["/servers/{endpoint}/matches/{timestamp}", true] = async (x, _) =>
+      Put["/servers/{endpoint:url}/matches/{timestamp:utc_timestamp}", true] = async (x, _) =>
        {
          var matchResult = this.Bind<MatchResult>();
-         string timestamp = x.timestamp;
          var matchInfo = new MatchInfo
          {
            endpoint = x.endpoint,
-           timestamp = timestamp.ParseInUts(),
+           timestamp = x.timestamp,
            result = matchResult
          };
          var validationResult = this.Validate(matchInfo);
@@ -78,7 +76,7 @@ namespace Kontur.GameStats.Server.Modules
 
     private Task<HttpStatusCode> AddMatchInfoInThread(MatchInfo match)
     {
-      var task = new Task<HttpStatusCode>(() => 
+      var task = new Task<HttpStatusCode>(() =>
       {
         try
         {

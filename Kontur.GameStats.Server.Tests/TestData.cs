@@ -53,7 +53,7 @@ namespace Kontur.GameStats.Server.Tests
         result = new MatchResult()
         {
           map = "DM-HelloWorld",
-          gameModel = "DM",
+          gameMode = "DM",
           fragLimit = 20,
           timeLimit = 20,
           timeElapsed = 12.345678,
@@ -83,7 +83,7 @@ namespace Kontur.GameStats.Server.Tests
         result = new MatchResult()
         {
           map = "Fury Road",
-          gameModel = "Ex",
+          gameMode = "Ex",
           fragLimit = 15,
           timeLimit = 10,
           timeElapsed = 7.4564231,

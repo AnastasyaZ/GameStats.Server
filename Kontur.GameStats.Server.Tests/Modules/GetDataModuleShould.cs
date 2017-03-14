@@ -23,10 +23,10 @@ namespace Kontur.GameStats.Server.Tests.Modules
       Browser.Put($"/servers/{Endpoint}/info",
         with => with.JsonBody(Server));
 
-      var response= Browser.Get($"/servers/{Endpoint}/Info");
+      var response = Browser.Get($"/servers/{Endpoint}/Info");
 
       response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-      var server=response.Body.DeserializeJson<GameServer>();
+      var server = response.Body.DeserializeJson<GameServer>();
       server.ShouldBeEquivalentTo(Server);
     }
 
@@ -41,9 +41,9 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [Test]
     public void ReturnStoredMatch()
     {
-      Browser.Put($"/servers/{Endpoint}/info",
+      var t1 = Browser.Put($"/servers/{Endpoint}/info",
         with => with.JsonBody(Server));
-      Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+      var t2 = Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
           with => with.JsonBody(Match));
 
       var responce = Browser.Get($"/servers/{Endpoint}/matches/{Timestamp}");
@@ -56,6 +56,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
     //TODO а если таких два??
 
     [Test]
+    [Ignore("not implemented")]
     public void ReturnOK_OnInfoRequest()
     {
       var responce = Browser.Get("/servers/Info");

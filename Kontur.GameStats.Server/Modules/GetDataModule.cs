@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.RequestHandlers;
 using Nancy;
 using NLog;
@@ -17,15 +16,14 @@ namespace Kontur.GameStats.Server.Modules
     {
       this.handler = handler;
 
-      Get["/servers/{endpoint}/Info", true] = async (x, _) =>
+      Get["/servers/{endpoint:url}/Info", true] = async (x, _) =>
       {
         return await GetServerInThread(x.endpoint);
       };
 
-      Get["/servers/{endpoint}/matches/{timestamp}", true] = async (x, _) =>
+      Get["/servers/{endpoint:url}/matches/{timestamp:utc_timestamp}", true] = async (x, _) =>
       {
-        string timestamp = x.timestamp;
-        return await GetMatchInThread(x.endpoint, timestamp.ParseInUts());
+        return await GetMatchInThread(x.endpoint, x.timestamp);
       };
 
       Get["/servers/Info", true] = async (x, _) =>

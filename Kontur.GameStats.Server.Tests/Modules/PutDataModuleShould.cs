@@ -47,19 +47,25 @@ namespace Kontur.GameStats.Server.Tests.Modules
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotAcceptable);
     }
 
-    [Ignore("not implemented")]
+    //[Ignore("not implemented")]
     [TestCase("2009-06-15T13:45:30")]
     [TestCase("6/15/2009")]
     [TestCase("2009-06-15T13:45:30.0000000-07:00")]
     [TestCase("2009-06-15T13:45:30.0000000Z")]
-    [TestCase(" 2009-06-15T13:45:30")]
-    [TestCase("2009-06-15 13:45:30Z")]
-    public void ReturnBadRequest_OnIncorrectTimestamp(string timestamp)
+    [TestCase("2009-06-15T13:45:30")]
+    public void ReturnNotFound_OnUnsupportedTimestamp(string timestamp)
     {
-      var responce = Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+      var responce = Browser.Put($"/servers/{Endpoint}/matches/{timestamp}",
         with => with.JsonBody(Match));
 
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadRequest);
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
+    }
+
+    [Test]
+    [Ignore("not implemented")]
+    public void ReturnBadRequest_OnIncorrectTimestamp()
+    {
+
     }
 
     [Test]

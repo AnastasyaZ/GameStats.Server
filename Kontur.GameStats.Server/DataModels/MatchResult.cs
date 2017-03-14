@@ -6,7 +6,7 @@ namespace Kontur.GameStats.Server.DataModels
   public class MatchResult:IEquatable<MatchResult>
   {
     public string map { get; set; }
-    public string gameModel { get; set; }
+    public string gameMode { get; set; }
     public int fragLimit { get; set; }
     public int timeLimit { get; set; }
     public double timeElapsed { get; set; }
@@ -21,7 +21,7 @@ namespace Kontur.GameStats.Server.DataModels
       if (ReferenceEquals(null, other)) return false;
       if (ReferenceEquals(this, other)) return true;
       return string.Equals(map, other.map) 
-        && string.Equals(gameModel, other.gameModel)
+        && string.Equals(gameMode, other.gameMode)
         && fragLimit == other.fragLimit 
         && timeLimit == other.timeLimit
         && timeElapsed.Equals(other.timeElapsed)
@@ -41,7 +41,7 @@ namespace Kontur.GameStats.Server.DataModels
       unchecked
       {
         var hashCode = (map != null ? map.GetHashCode() : 0);
-        hashCode = (hashCode*397) ^ (gameModel != null ? gameModel.GetHashCode() : 0);
+        hashCode = (hashCode*397) ^ (gameMode != null ? gameMode.GetHashCode() : 0);
         hashCode = (hashCode*397) ^ fragLimit;
         hashCode = (hashCode*397) ^ timeLimit;
         hashCode = (hashCode*397) ^ timeElapsed.GetHashCode();
