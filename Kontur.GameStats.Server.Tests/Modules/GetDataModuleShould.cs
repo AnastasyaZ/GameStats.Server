@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Kontur.GameStats.Server.DataModels;
 using Nancy;
@@ -75,13 +76,30 @@ namespace Kontur.GameStats.Server.Tests.Modules
     }
 
     [Test]
-    [Ignore("not implemented")]
-    public void ReturnOK_OnInfoRequest()
+    public void ReturnAllAddedServers()
+    {
+      var servers = TestData.Servers;
+      foreach (var s in servers)
+      {
+        Browser.Put($"/servers/{s.endpoint}/info",
+          with => with.JsonBody(s.gameServer));
+      }
+
+      var responce = Browser.Get("/servers/Info");
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+      var responceServers = responce.Body.DeserializeJson<IEnumerable<GameServer>>();
+      responceServers.Should().BeEquivalentTo(servers.Select(x => x.gameServer));
+    }
+
+    [Test]
+    public void ReturnEmptyArray_IfNoOneServerWasntAdded()
     {
       var responce = Browser.Get("/servers/Info");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-      responce.Body.DeserializeJson<IEnumerable<GameServerInfo>>();//TODO
+      var responceServers = responce.Body.DeserializeJson<IEnumerable<GameServer>>();
+      responceServers.Should().BeEmpty();
     }
   }
 }

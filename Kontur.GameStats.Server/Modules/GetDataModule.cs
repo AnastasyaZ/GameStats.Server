@@ -16,20 +16,14 @@ namespace Kontur.GameStats.Server.Modules
     {
       this.handler = handler;
 
-      Get["/servers/{endpoint:url}/Info", true] = async (x, _) =>
-      {
-        return await GetServerInThread(x.endpoint);
-      };
+      Get["/servers/{endpoint:url}/Info", true] = async (x, _)
+        => await GetServerInThread(x.endpoint);
 
-      Get["/servers/{endpoint:url}/matches/{timestamp:utc_timestamp}", true] = async (x, _) =>
-      {
-        return await GetMatchInThread(x.endpoint, x.timestamp);
-      };
+      Get["/servers/{endpoint:url}/matches/{timestamp:utc_timestamp}", true] = async (x, _)
+        => await GetMatchInThread(x.endpoint, x.timestamp);
 
-      Get["/servers/Info", true] = async (x, _) =>
-      {
-        return await GetServersInThread();
-      };
+      Get["/servers/Info", true] = async (x, _)
+        => await GetServersInThread();
     }
 
     private Task<Response> GetServerInThread(string endpoint)
@@ -81,8 +75,22 @@ namespace Kontur.GameStats.Server.Modules
 
     private Task<Response> GetServersInThread()
     {
-      throw new NotImplementedException();
-      //return Response.AsJson(new[] { new GameServerInfo() });
+      var task = new Task<Response>(() =>
+      {
+        GameServer[] servers;
+        try
+        {
+          servers = handler.GetGameServers();
+        }
+        catch (Exception e)
+        {
+          logger.Error(e.Message);
+          return HttpStatusCode.InternalServerError;
+        }
+        return Response.AsJson(servers);
+      });
+      task.Start();
+      return task;
     }
   }
 }
