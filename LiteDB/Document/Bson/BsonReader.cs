@@ -110,7 +110,7 @@ namespace LiteDB
                 if (ts == 253402300800000) return DateTime.MaxValue;
                 if (ts == -62135596800000) return DateTime.MinValue;
 
-                return BsonValue.UnixEpoch.AddMilliseconds(ts).ToLocalTime();
+              return BsonValue.UnixEpoch.AddMilliseconds(ts).ToUniversalTime();
             }
             else if (type == 0x0A) // Null
             {
