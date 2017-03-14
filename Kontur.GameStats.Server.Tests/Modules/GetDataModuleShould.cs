@@ -41,9 +41,9 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [Test]
     public void ReturnStoredMatch()
     {
-      var t1 = Browser.Put($"/servers/{Endpoint}/info",
+      Browser.Put($"/servers/{Endpoint}/info",
         with => with.JsonBody(Server));
-      var t2 = Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+      Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
           with => with.JsonBody(Match));
 
       var responce = Browser.Get($"/servers/{Endpoint}/matches/{Timestamp}");
@@ -53,7 +53,26 @@ namespace Kontur.GameStats.Server.Tests.Modules
       match.ShouldBeEquivalentTo(Match);
     }
 
-    //TODO а если таких два??
+    [Test]
+    public void ReturnFirstMatch_IfTwoOrMoreHaveEqualEndpointAndTimestamp()
+    {
+      var first = TestData.Matches[0].result;
+      var second = TestData.Matches[1].result;
+
+      Browser.Put($"/servers/{Endpoint}/info",
+        with => with.JsonBody(Server));
+
+      Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+          with => with.JsonBody(first));
+      Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+          with => with.JsonBody(second));
+
+      var responce = Browser.Get($"/servers/{Endpoint}/matches/{Timestamp}");
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+      var match = responce.Body.DeserializeJson<MatchResult>();
+      match.ShouldBeEquivalentTo(first);
+    }
 
     [Test]
     [Ignore("not implemented")]

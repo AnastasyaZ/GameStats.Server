@@ -16,6 +16,30 @@ namespace Kontur.GameStats.Server.Tests.Modules
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
     }
 
+    [TestCase("kontur.ru-1024")]
+    [TestCase("name-with-dashes.com-5454")]
+    [TestCase("192.168.35.38-80")]
+    public void ReturnOK_ForDifferentEndpointFormats(string endpoint)
+    {
+      var responce = Browser.Put($"/servers/{endpoint}/info",
+        with => with.JsonBody(Server));
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
+    }
+
+    [TestCase("2009-06-15T13:45:30")]
+    [TestCase("6/15/2009")]
+    [TestCase("2009-06-15T13:45:30.0000000-07:00")]
+    [TestCase("2009-06-15T13:45:30.0000000Z")]
+    [TestCase("2009-06-15T13:45:30")]
+    public void ReturnNotFound_OnUnsupportedTimestamp(string timestamp)
+    {
+      var responce = Browser.Put($"/servers/{Endpoint}/matches/{timestamp}",
+        with => with.JsonBody(Match));
+
+      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
+    }
+
     [Test]
     public void ReturnBadRequest_OnIncorrectAdverticeRequestBody()
     {
@@ -45,20 +69,6 @@ namespace Kontur.GameStats.Server.Tests.Modules
           with => with.JsonBody(Match));
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotAcceptable);
-    }
-
-    //[Ignore("not implemented")]
-    [TestCase("2009-06-15T13:45:30")]
-    [TestCase("6/15/2009")]
-    [TestCase("2009-06-15T13:45:30.0000000-07:00")]
-    [TestCase("2009-06-15T13:45:30.0000000Z")]
-    [TestCase("2009-06-15T13:45:30")]
-    public void ReturnNotFound_OnUnsupportedTimestamp(string timestamp)
-    {
-      var responce = Browser.Put($"/servers/{Endpoint}/matches/{timestamp}",
-        with => with.JsonBody(Match));
-
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotFound);
     }
 
     [Test]
@@ -91,7 +101,5 @@ namespace Kontur.GameStats.Server.Tests.Modules
     //TODO add test for incorrect only one field in model
     //TODO check elements of arrays also
     //TODO check string on null/empty
-    //TODO add check fir incorrect endpoint and timestamp
-    //TODO DRY in testcases
   }
 }
