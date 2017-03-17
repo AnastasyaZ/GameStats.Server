@@ -24,8 +24,8 @@ namespace Kontur.GameStats.Server.DataModels
         && averageMatchesPerDay.Equals(other.averageMatchesPerDay)
         && maximumPopulation == other.maximumPopulation 
         && averagePopulation.Equals(other.averagePopulation) 
-        && Helpers.CompareLists(Top5GameModels, other.Top5GameModels)
-        && Helpers.CompareLists(top5Maps, other.top5Maps);
+        && Top5GameModels.CompareWithoutOrder(other.Top5GameModels)
+        && top5Maps.CompareWithoutOrder(other.top5Maps);
     }
 
     public override bool Equals(object obj)

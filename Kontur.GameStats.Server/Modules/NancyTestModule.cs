@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Nancy;
@@ -26,10 +27,22 @@ namespace Kontur.GameStats.Server.Modules
       };
       Get["/nancy/{index}", true] = async (x, ct) =>
       {
-        var res=await DoingWorkInThread(x.index);
+        var res = await DoingWorkInThread(x.index);
         return res;
       };
       Get["/nancy"] = _ => "Hello, Nancy is working.";
+
+      Get["/dynamicDict"] = _ =>
+       {
+         var dict = new Dictionary<string, dynamic>
+         {
+           {"int_val", 3},
+           {"double_val", 3.14},
+           {"datetime_val", DateTime.Now.ToUniversalTime()},
+           {"array_val", new[] {"str1", "str2"}}
+         };
+         return Response.AsJson(dict);
+       };
     }
 
     private Task<HttpStatusCode> DoingWorkInThread(int index)

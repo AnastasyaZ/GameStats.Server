@@ -18,6 +18,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
 
     [TestCase("kontur.ru-1024")]
     [TestCase("name-with-dashes.com-5454")]
+    [TestCase("H0stNameWithCapitalLe44ersAndNumb3rs.shop-15314")]
     [TestCase("192.168.35.38-80")]
     public void ReturnOK_ForDifferentEndpointFormats(string endpoint)
     {

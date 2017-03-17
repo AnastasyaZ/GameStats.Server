@@ -15,7 +15,7 @@ namespace Kontur.GameStats.Server.DataModels
       if (ReferenceEquals(null, other)) return false;
       if (ReferenceEquals(this, other)) return true;
       if(!string.Equals(name, other.name)) return false;
-      return Helpers.CompareLists(gameModes, other.gameModes);
+      return gameModes.CompareWithoutOrder(other.gameModes);
     }
 
     public override bool Equals(object obj)
@@ -30,7 +30,7 @@ namespace Kontur.GameStats.Server.DataModels
     {
       unchecked
       {
-        return ((name != null ? name.GetHashCode() : 0)*397) ^ (gameModes != null ? gameModes.GetHashCode() : 0);
+        return ((name?.GetHashCode() ?? 0)*397) ^ (gameModes?.GetHashCode() ?? 0);
       }
     }
 

@@ -25,7 +25,7 @@ namespace Kontur.GameStats.Server.DataModels
         && fragLimit == other.fragLimit 
         && timeLimit == other.timeLimit
         && timeElapsed.Equals(other.timeElapsed)
-        && Helpers.CompareLists(scoreboard, other.scoreboard);
+        && scoreboard.CompareWithoutOrder(other.scoreboard);
     }
 
     public override bool Equals(object obj)

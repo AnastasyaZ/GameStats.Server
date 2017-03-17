@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using FluentAssertions;
 using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.DataModels;
+using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.RequestHandlers;
 using Kontur.GameStats.Server.Tests.Database;
 using NUnit.Framework;
@@ -90,7 +90,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     [TestCase("2033-12-31T23:59:59Z")]
     public void WorkWithMatchesFromFutureAndPast(string timestamp)
     {
-      var datetime = DateTime.Parse(timestamp);
+      var datetime = timestamp.ParseInUts();
       var anomalyMatch = new MatchInfo
       {
         endpoint = match.endpoint,

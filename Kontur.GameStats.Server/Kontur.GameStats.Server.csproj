@@ -90,7 +90,7 @@
     <Compile Include="DataModels\GameServerInfo.cs" />
     <Compile Include="DataModels\MatchIdentifyers.cs" />
     <Compile Include="DataModels\Utility\DateTimeConverter.cs" />
-    <Compile Include="DataModels\Utility\Helpers.cs" />
+    <Compile Include="DataModels\Utility\LinqExtensions.cs" />
     <Compile Include="DataModels\MatchInfo.cs" />
     <Compile Include="DataModels\MatchResult.cs" />
     <Compile Include="DataModels\PlayerResult.cs" />
