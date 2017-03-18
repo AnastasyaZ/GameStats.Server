@@ -314,6 +314,66 @@ namespace Kontur.GameStats.Server.Tests
             }
           }
         }
+      },
+      new MatchInfo
+      {
+        endpoint = "gg.com-4545",
+        timestamp = "2017-01-22T15:17:00Z".ParseInUts(),
+        result = new MatchResult
+        {
+          map = "DM-Kitchen",
+          gameMode = "DM",
+          fragLimit = 20,
+          timeLimit = 20,
+          timeElapsed = 12.345678,
+          scoreboard = new[]
+          {
+            new PlayerResult
+            {
+              name = "Player1",
+              frags = 20,
+              kills = 21,
+              deaths = 3
+            },
+            new PlayerResult
+            {
+              name = "Player2",
+              frags = 2,
+              kills = 2,
+              deaths = 21
+            }
+          }
+        }
+      },
+      new MatchInfo
+      {
+        endpoint = "hm.com-5656",
+        timestamp = "2048-01-22T15:17:00Z".ParseInUts(),
+        result = new MatchResult
+        {
+          map = "DM-1on1-Rose",
+          gameMode = "DM",
+          fragLimit = 20,
+          timeLimit = 20,
+          timeElapsed = 12.345678,
+          scoreboard = new[]
+          {
+            new PlayerResult
+            {
+              name = "Player1",
+              frags = 20,
+              kills = 21,
+              deaths = 3
+            },
+            new PlayerResult
+            {
+              name = "Player2",
+              frags = 2,
+              kills = 2,
+              deaths = 21
+            }
+          }
+        }
       }
     };
 
@@ -327,7 +387,7 @@ namespace Kontur.GameStats.Server.Tests
     {
         {"totalMatchesPlayed", 7},
         {"maximumMatchesPerDay", 2},
-        {"averageMatchesPerDay", 0.0005874454},
+        {"averageMatchesPerDay", 0.00032051282},//TODO
         {"maximumPopulation", 10},
         {"averagePopulation", 3.142857},
         {"top5GameModes", new [] {"DM", "Ex", "€ɱ☘✿❣"}},

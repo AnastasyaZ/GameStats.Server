@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using FakeItEasy;
 using FluentAssertions;
 using Kontur.GameStats.Server.Database;
@@ -8,7 +9,7 @@ using NUnit.Framework;
 namespace Kontur.GameStats.Server.Tests.RequestHandlers
 {
   [TestFixture]
-  public class ServerStatisticModuleShould
+  public class ServerStatisticHandlerShould
   {
     private IDatabaseAdapter database;
     private ServerStatisticHandler handler;
@@ -18,9 +19,13 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     [SetUp]
     public void SetUp()
     {
+      var allMatches = TestData.Matches;
+      var currentServerMatches = allMatches.Where(x => x.endpoint == endpoint);
       database = A.Fake<IDatabaseAdapter>();
       A.CallTo(() => database.GetMatches(endpoint))
-        .Returns(TestData.Matches);
+        .Returns(currentServerMatches);
+      A.CallTo(() => database.GetMatches())
+        .Returns(allMatches);
       handler=new ServerStatisticHandler(database);
     }
 
@@ -32,7 +37,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
 
       ((int)statistic["totalMatchesPlayed"]).Should().Be(expectation["totalMatchesPlayed"]);
       ((int)statistic["maximumMatchesPerDay"]).Should().Be(expectation["maximumMatchesPerDay"]);
-      //((double)statistic["averageMatchesPerDay"]).Should().BeApproximately((double)expectation["averageMatchesPerDay"], 0.0001);
+      ((double)statistic["averageMatchesPerDay"]).Should().BeApproximately((double)expectation["averageMatchesPerDay"], 0.00001);
       ((int)statistic["maximumPopulation"]).Should().Be(expectation["maximumPopulation"]);
       ((double)statistic["averagePopulation"]).Should().BeApproximately((double)expectation["averagePopulation"], 0.0001);
       ((IList<string>)statistic["top5GameModes"]).Should().ContainInOrder((IList<string>) expectation["top5GameModes"]);

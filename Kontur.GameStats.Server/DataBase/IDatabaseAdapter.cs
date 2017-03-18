@@ -14,5 +14,6 @@ namespace Kontur.GameStats.Server.Database
 
     IEnumerable<GameServerInfo> GetServers();
     IEnumerable<MatchInfo> GetMatches(string endpoint);
+    IEnumerable<MatchInfo> GetMatches();
   }
 }

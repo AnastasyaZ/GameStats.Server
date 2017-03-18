@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Kontur.GameStats.Server.DataModels.Utility;
 
 namespace Kontur.GameStats.Server.DataModels
@@ -12,7 +13,7 @@ namespace Kontur.GameStats.Server.DataModels
     public double timeElapsed { get; set; }
     public PlayerResult[] scoreboard { get; set; }
 
-    public PlayerResult winner => scoreboard[0];
+    public PlayerResult winner => scoreboard.FirstOrDefault();
 
     #region equality members
 

@@ -71,6 +71,11 @@ namespace Kontur.GameStats.Server.Database
       return matches.Find(x => x.endpoint == endpoint);
     }
 
+    public IEnumerable<MatchInfo> GetMatches()
+    {
+      return matches.FindAll();
+    }
+
     #region Dispose
 
     public void Dispose()
