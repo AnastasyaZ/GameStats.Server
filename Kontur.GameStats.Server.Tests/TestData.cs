@@ -174,7 +174,7 @@ namespace Kontur.GameStats.Server.Tests
           {
             new PlayerResult
             {
-              name = "Forever alone",
+              name = "player1",
               frags = 0,
               kills = 6,
               deaths = 6
@@ -244,7 +244,7 @@ namespace Kontur.GameStats.Server.Tests
           {
             new PlayerResult
             {
-              name = "PlaYer1",
+              name = "Player7",
               frags = 0,
               kills = 0,
               deaths = 0
@@ -286,7 +286,7 @@ namespace Kontur.GameStats.Server.Tests
             },
             new PlayerResult
             {
-              name = "Player7",
+              name = "PlaYer1",
               frags = 0,
               kills = 0,
               deaths = 0
@@ -330,14 +330,14 @@ namespace Kontur.GameStats.Server.Tests
           {
             new PlayerResult
             {
-              name = "Player1",
+              name = "Player2",
               frags = 20,
               kills = 21,
               deaths = 3
             },
             new PlayerResult
             {
-              name = "Player2",
+              name = "Player1",
               frags = 2,
               kills = 2,
               deaths = 21
@@ -360,14 +360,14 @@ namespace Kontur.GameStats.Server.Tests
           {
             new PlayerResult
             {
-              name = "Player1",
+              name = "Player2",
               frags = 20,
               kills = 21,
               deaths = 3
             },
             new PlayerResult
             {
-              name = "Player2",
+              name = "player1",
               frags = 2,
               kills = 2,
               deaths = 21
@@ -387,11 +387,25 @@ namespace Kontur.GameStats.Server.Tests
     {
         {"totalMatchesPlayed", 7},
         {"maximumMatchesPerDay", 2},
-        {"averageMatchesPerDay", 0.00032051282},//TODO
+        {"averageMatchesPerDay", 0.00032051282},
         {"maximumPopulation", 10},
         {"averagePopulation", 3.142857},
         {"top5GameModes", new [] {"DM", "Ex", "€ɱ☘✿❣"}},
         {"top5Maps", new [] {"Desolation", "DM-HelloWorld", "Fury Road", "Recent", "𠳏𠸏𠻗"}}
+    };
+
+    public static Dictionary<string, dynamic> PlayerStatistic = new Dictionary<string, dynamic>
+    {
+        {"totalMatchesPlayed", 7 },
+        {"totalMatchesWon", 4},
+        {"favoriteServer", "kontur.ru-1024"},
+        {"uniqueServers", 3},
+        {"favoriteGameMode", "DM"},
+        {"averageScoreboardPercent", 47.6190476},
+        {"maximumMatchesPerDay", 3},
+        {"averageMatchesPerDay", 0.00032051282},
+        {"lastMatchPlayed", "2048-01-22T15:17:00Z".ParseInUts()},
+        {"killToDeathRatio", 1.280701754}
     };
 
     #endregion

@@ -92,8 +92,9 @@
     <Compile Include="Modules\PutDataModuleShould.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestHandlers\GetDataHandlerShould.cs" />
+    <Compile Include="RequestHandlers\PlayerStatisticHandlerShould.cs" />
     <Compile Include="RequestHandlers\PutDataHandlerShould.cs" />
-    <Compile Include="RequestHandlers\ServerStatisticModuleShould.cs" />
+    <Compile Include="RequestHandlers\ServerStatisticHandlerShould.cs" />
     <Compile Include="TestData.cs" />
   </ItemGroup>
   <ItemGroup>
