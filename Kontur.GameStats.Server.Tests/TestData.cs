@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Kontur.GameStats.Server.DataModels;
 using Kontur.GameStats.Server.DataModels.Utility;
 
@@ -24,13 +25,13 @@ namespace Kontur.GameStats.Server.Tests
         endpoint = "192.168.35.38-5454",
         gameServer = new GameServer
         {
-          name = "LocalServer",
+          name = "Local",
           gameModes = new[] {"MM", "DM"}
         }
       },
       new GameServerInfo
       {
-        endpoint = "geeks-games.com-2048",
+        endpoint = "gg.com-4545",
         gameServer = new GameServer
         {
           name = "GG",
@@ -60,14 +61,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 12.345678,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player1",
               frags = 20,
               kills = 21,
               deaths = 3
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player2",
               frags = 2,
@@ -90,40 +91,40 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 12.345678,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player1",
               frags = 20,
               kills = 21,
               deaths = 3
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "☘✿❣",
               frags = 2,
               kills = 2,
-              deaths = 21
+              deaths = 20
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "✅",
               frags = 2,
               kills = 2,
-              deaths = 21
+              deaths = 19
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "㎍",
               frags = 2,
               kills = 2,
-              deaths = 21
+              deaths = 18
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "𝕶",
               frags = 2,
               kills = 2,
-              deaths = 21
+              deaths = 17
             }
           }
         }
@@ -141,14 +142,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 7.4564231,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Max",
               frags = 14,
               kills = 29,
               deaths = 15
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Nux",
               frags = 15,
@@ -172,7 +173,7 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 100.06,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "player1",
               frags = 0,
@@ -194,7 +195,7 @@ namespace Kontur.GameStats.Server.Tests
           fragLimit = 0,
           timeLimit = 0,
           timeElapsed = 0.0,
-          scoreboard = new PlayerResult[0]
+          scoreboard = new PlayerInfo[0]
         }
       },
       new MatchInfo
@@ -211,14 +212,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 100.06,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "PLAYER1",
               frags = 20,
               kills = 21,
               deaths = 3
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player2",
               frags = 2,
@@ -242,70 +243,70 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 0,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player7",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player2",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player3",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player4",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player5",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player6",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "PlaYer1",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player8",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player9",
               frags = 0,
               kills = 0,
               deaths = 0
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player10",
               frags = 0,
@@ -328,14 +329,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 12.345678,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player2",
               frags = 20,
               kills = 21,
               deaths = 3
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player1",
               frags = 2,
@@ -347,7 +348,7 @@ namespace Kontur.GameStats.Server.Tests
       },
       new MatchInfo
       {
-        endpoint = "hm.com-5656",
+        endpoint = "192.168.35.38-5454",
         timestamp = "2048-01-22T15:17:00Z".ParseInUts(),
         result = new MatchResult
         {
@@ -358,14 +359,14 @@ namespace Kontur.GameStats.Server.Tests
           timeElapsed = 12.345678,
           scoreboard = new[]
           {
-            new PlayerResult
+            new PlayerInfo
             {
               name = "Player2",
               frags = 20,
-              kills = 21,
-              deaths = 3
+              kills = 28,
+              deaths = 7
             },
-            new PlayerResult
+            new PlayerInfo
             {
               name = "player1",
               frags = 2,
@@ -378,7 +379,7 @@ namespace Kontur.GameStats.Server.Tests
     };
 
     public static MatchInfo Match => Matches[0];
-    
+
     #endregion
 
     #region statistic
@@ -406,6 +407,67 @@ namespace Kontur.GameStats.Server.Tests
         {"averageMatchesPerDay", 0.00032051282},
         {"lastMatchPlayed", "2048-01-22T15:17:00Z".ParseInUts()},
         {"killToDeathRatio", 1.280701754}
+    };
+
+    #endregion
+
+    #region reports
+
+    public static IList<DateTime> Timestamps = new[]
+    {
+      "2048-01-22T15:17:00Z".ParseInUts(),
+      "2020-10-30T00:00:00Z".ParseInUts(),
+      "2017-03-17T00:00:00Z".ParseInUts(),
+      "2017-03-17T00:00:00Z".ParseInUts(),
+      "2017-02-28T23:59:59Z".ParseInUts(),
+      "2017-01-22T15:17:00Z".ParseInUts(),
+      "2017-01-22T15:17:00Z".ParseInUts(),
+      "2017-01-22T15:17:00Z".ParseInUts(),
+      "1988-03-17T00:00:00Z".ParseInUts()
+    };
+
+    public static PlayerInfo[] Scoreboard =
+    {
+      new PlayerInfo
+      {
+        name = "player1",
+        kills = 7,
+        deaths = 3
+      },
+      new PlayerInfo
+      {
+        name = "player2",
+        kills = 15,
+        deaths = 9
+      },
+      new PlayerInfo
+      {
+        name = "player3",
+        kills = 1,
+        deaths = 18
+      }
+    };
+
+    public static ServerReportInfo[] BestServers =
+    {
+      new ServerReportInfo
+      {
+        endpoint = "192.168.35.38-5454",
+        name = "Local",
+        averageMatchesPerDay = 1
+      },
+      new ServerReportInfo
+      {
+        endpoint = "kontur.ru-1024",
+        name = "] My P3rfect GameServer [",
+        averageMatchesPerDay = 0.00032051282
+      },
+      new ServerReportInfo
+      {
+        endpoint = "gg.com-4545",
+        name = "GG",
+        averageMatchesPerDay = 1.0/11322
+      }
     };
 
     #endregion

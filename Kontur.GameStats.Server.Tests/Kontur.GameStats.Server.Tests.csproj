@@ -94,6 +94,7 @@
     <Compile Include="RequestHandlers\GetDataHandlerShould.cs" />
     <Compile Include="RequestHandlers\PlayerStatisticHandlerShould.cs" />
     <Compile Include="RequestHandlers\PutDataHandlerShould.cs" />
+    <Compile Include="RequestHandlers\ReportHandlerShouldReturnBestPlayers.cs" />
     <Compile Include="RequestHandlers\ServerStatisticHandlerShould.cs" />
     <Compile Include="TestData.cs" />
   </ItemGroup>

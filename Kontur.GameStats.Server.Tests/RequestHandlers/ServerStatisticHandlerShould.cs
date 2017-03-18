@@ -20,10 +20,10 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     public void SetUp()
     {
       var allMatches = TestData.Matches;
-      var currentServerMatches = allMatches.Where(x => x.endpoint == endpoint);
+      var serverMatches = allMatches.Where(x => x.endpoint == endpoint).ToArray();
       database = A.Fake<IDatabaseAdapter>();
       A.CallTo(() => database.GetMatches(endpoint))
-        .Returns(currentServerMatches);
+        .Returns(serverMatches);
       A.CallTo(() => database.GetMatches())
         .Returns(allMatches);
       handler=new ServerStatisticHandler(database);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using Kontur.GameStats.Server.DataModels;
 using LiteDB;
 
@@ -61,19 +62,27 @@ namespace Kontur.GameStats.Server.Database
       return matches.FindOne(x => x.endpoint == endpoint && x.timestamp == timestamp);
     }
 
-    public IEnumerable<GameServerInfo> GetServers()
+    public IList<GameServerInfo> GetServers()
     {
-      return servers.FindAll();
+      return servers.FindAll().ToArray();
     }
 
-    public IEnumerable<MatchInfo> GetMatches(string endpoint)
+    public IList<MatchInfo> GetMatches(string endpoint)
     {
-      return matches.Find(x => x.endpoint == endpoint);
+      return matches.Find(x => x.endpoint == endpoint).ToArray();
     }
 
-    public IEnumerable<MatchInfo> GetMatches()
+    public IList<MatchInfo> GetMatches()
     {
-      return matches.FindAll();
+      return matches.FindAll().ToArray();
+    }
+
+    public IList<MatchInfo> GetRecentMatches(int count)
+    {
+      return matches.FindAll()
+        .OrderByDescending(x => x.timestamp)
+        .Take(count)
+        .ToArray();
     }
 
     #region Dispose

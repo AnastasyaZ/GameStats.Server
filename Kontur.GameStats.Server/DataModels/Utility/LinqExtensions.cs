@@ -24,5 +24,10 @@ namespace Kontur.GameStats.Server.DataModels.Utility
         .Take(count)
         .Select(x => x.Key);
     }
+
+    public static IEnumerable<T> SkipNulls<T>(this IEnumerable<T> source)
+    {
+      return source.Where(x => x != null);
+    } 
   }
 }

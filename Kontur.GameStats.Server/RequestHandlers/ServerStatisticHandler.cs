@@ -19,7 +19,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
     public Dictionary<string, dynamic> GetStatistic(string endpoint)
     {
       var matches = database.GetMatches(endpoint).ToList();
-      var lastMatchData = database.GetMatches().Max(x => x.timestamp);
+      var lastMatchData = database.GetMatches().Max(x => x.timestamp);//todo
 
       var statistic = new Dictionary<string, dynamic>
       {
