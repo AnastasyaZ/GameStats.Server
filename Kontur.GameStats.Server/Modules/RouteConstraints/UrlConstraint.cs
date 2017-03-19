@@ -9,7 +9,7 @@ namespace Kontur.GameStats.Server.Modules.RouteConstraints
     {
       if (Regex.IsMatch(segment, "^[\\w.-]+-[0-9]{1,5}$"))
       {
-        matchedValue = segment;
+        matchedValue = segment.ToLower();
         return true;
       }
       matchedValue = null;
