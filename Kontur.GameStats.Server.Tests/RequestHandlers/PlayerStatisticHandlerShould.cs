@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using FakeItEasy;
 using FluentAssertions;
-using FluentAssertions.Equivalency;
 using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.RequestHandlers;
 using NUnit.Framework;

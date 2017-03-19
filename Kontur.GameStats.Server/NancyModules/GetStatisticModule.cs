@@ -29,9 +29,27 @@ namespace Kontur.GameStats.Server.NancyModules
 
       Get["/servers/{endpoint:url}/stats", true] = async (x, _) => await GetServerStatisticAsync(x.endpoint);
       Get["/players/{name}/stats", true] = async (x, _) => await GetPlayerStatisticAsync(x.name);
-      Get["/reports/recent-matches/{count:int}", true] = async (x, _) => await GetRecentMatchesReportAsync(x.count);//TODO значение по умолчанию перенести
-      Get["/reports/best-players/{count:int?5}"] = _ => HttpStatusCode.NotImplemented;
-      Get["/reports/popular-servers/{count:int?5}"] = _ => HttpStatusCode.NotImplemented;
+
+      Get["/reports/recent-matches/", true] = async (x, _) => await GetRecentMatchesReportAsync(Constants.DefaultCount);
+      Get["/reports/recent-matches/{count:int}", true] = async (x, _) =>  
+      {
+        var count = NormalizeCount(x.count);
+        return await GetRecentMatchesReportAsync(count);
+      };
+
+      Get["/reports/best-players/", true] = async (x, _) => await GetBestPlayersReportAsync(Constants.DefaultCount);
+      Get["/reports/best-players/{count:int}", true] = async (x, _) =>
+      {
+        var count = NormalizeCount(x.count);
+        return await GetBestPlayersReportAsync(count);
+      };
+
+      Get["/reports/popular-servers/", true] = async (x, _) => await GetPopulerServersReportAsync(Constants.DefaultCount);
+      Get["/reports/popular-servers/{count:int}", true] = async (x, _) =>
+      {
+        var count = NormalizeCount(x.count);
+        return await GetPopulerServersReportAsync(count);
+      };
     }
 
     private Task<Response> GetServerStatisticAsync(string endpoint)
@@ -92,6 +110,53 @@ namespace Kontur.GameStats.Server.NancyModules
       });
       task.Start();
       return task;
+    }
+
+    private Task<Response> GetBestPlayersReportAsync(int count)
+    {
+      var task = new Task<Response>(() =>
+      {
+        IList<PlayerReportInfo> report;
+        try
+        {
+          report = reportsHandler.GetBestPlayers(count).ToArray();
+        }
+        catch (Exception e)
+        {
+          logger.Error(e.Message);
+          return HttpStatusCode.InternalServerError;
+        }
+        return Response.AsJson(report);
+      });
+      task.Start();
+      return task;
+    }
+
+    private Task<Response> GetPopulerServersReportAsync(int count)
+    {
+      var task = new Task<Response>(() =>
+      {
+        IList<ServerReportInfo> report;
+        try
+        {
+          report = reportsHandler.GetPopularServers(count).ToArray();
+        }
+        catch (Exception e)
+        {
+          logger.Error(e.Message);
+          return HttpStatusCode.InternalServerError;
+        }
+        return Response.AsJson(report);
+      });
+      task.Start();
+      return task;
+    }
+
+    private static int NormalizeCount(int count)
+    {
+      if (count < 0) return 0;
+      if (count > 50) return 50;
+      return count;
     }
   }
 }

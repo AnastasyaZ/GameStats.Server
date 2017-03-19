@@ -1,63 +1,67 @@
-﻿using FluentAssertions;
-using Kontur.GameStats.Server.NancyModules;
-using Nancy;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
+using Kontur.GameStats.Server.DataModels;
 using Nancy.Testing;
 using NUnit.Framework;
 
 namespace Kontur.GameStats.Server.Tests.Modules
 {
-  public class GetStatisticModuleShould
+  public class GetStatisticModuleShould : AbstractModuleTest
   {
-    private Browser browser;
 
     [SetUp]
     public void SetUp()
     {
-      browser = new Browser(with => with.Module<GetStatisticModule>());
+      Browser.Put($"/servers/{Endpoint}/info",
+        with => with.JsonBody(Server));
+
+      for (var i = 0; i < 60; i++)
+      {
+        Browser.Put($"/servers/{Endpoint}/matches/{Timestamp}",
+          with => with.JsonBody(Match));
+      }
     }
 
-    [Test]
-    public void NotImplemented_OnServerStatistic()
+    #region test for count of items
+
+    [TestCase("", 5)]
+    [TestCase("0", 0)]
+    [TestCase("1", 1)]
+    [TestCase("50", 50)]
+    [TestCase("51", 50)]
+    public void ReturnCorrectCountOfRecentMatches(string requested, int expectedCount)
     {
-      var responce = browser.Get("/servers/kontur.ru-1024/stats");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
+      var items = Browser.Get($"/reports/recent-matches/{requested}")
+        .Body.DeserializeJson<IEnumerable<MatchReportInfo>>();
+      items.Count().Should().Be(expectedCount);
     }
 
-    [Test]
-    public void NotImplemented_OnPlayerStatistic()
+    [TestCase("", 5)]
+    [TestCase("0", 0)]
+    [TestCase("1", 1)]
+    [TestCase("50", 50)]
+    [TestCase("51", 50)]
+    public void ReturnCorrectCountOfBestPlayers(string requested, int expectedCount)
     {
-      var responce = browser.Get("/players/MadMax/stats");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
+      var items = Browser.Get($"/reports/best-players/{requested}")
+        .Body.DeserializeJson<IEnumerable<PlayerReportInfo>>();
+      items.Count().Should().BeGreaterOrEqualTo(0).And.BeLessOrEqualTo(expectedCount);
     }
 
-    [Test]
-    public void NotImplemented_OnRecentMatches()
+    [TestCase("", 5)]
+    [TestCase("0", 0)]
+    [TestCase("1", 1)]
+    [TestCase("50", 50)]
+    [TestCase("51", 50)]
+    public void ReturnCorrectCountOfPopularservers(string requested, int expectedCount)
     {
-      var responce = browser.Get("/reports/recent-matches");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
-
-      responce = browser.Get("/reports/recent-matches/20");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
+      var items = Browser.Get($"/reports/popular-servers/{requested}")
+        .Body.DeserializeJson<IEnumerable<ServerReportInfo>>();
+      items.Count().Should().BeGreaterOrEqualTo(0).And.BeLessOrEqualTo(expectedCount);
     }
 
-    [Test]
-    public void NotImplemented_OnBestPlayers()
-    {
-      var responce = browser.Get("/reports/best-players");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
-
-      responce = browser.Get("/reports/best-players/30");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
-    }
-
-    [Test]
-    public void NotImplemented_OnPopulatServers()
-    {
-      var responce = browser.Get("/reports/popular-servers");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
-
-      responce = browser.Get("/reports/popular-servers/40");
-      responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.NotImplemented);
-    }
+    #endregion
+    
   }
 }

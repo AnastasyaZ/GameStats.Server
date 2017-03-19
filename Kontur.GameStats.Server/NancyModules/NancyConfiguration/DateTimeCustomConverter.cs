@@ -5,7 +5,7 @@ using Nancy.Json;
 
 namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration
 {
-  public class DateTimeCustomConverter:  JavaScriptConverter
+  public class DateTimeCustomConverter: JavaScriptConverter
   {
     public override IDictionary<string, object> Serialize(object obj, JavaScriptSerializer serializer)
     {
