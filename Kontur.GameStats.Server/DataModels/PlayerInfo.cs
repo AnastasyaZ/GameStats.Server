@@ -13,14 +13,17 @@ namespace Kontur.GameStats.Server.DataModels
 
     public bool Equals(PlayerInfo other)
     {
-      return string.Equals(name, other.name) && frags == other.frags && kills == other.kills && deaths == other.deaths;
+      return EqualByNameIgnoreCase(other)
+        && frags == other.frags
+        && kills == other.kills
+        && deaths == other.deaths;
     }
 
     public override bool Equals(object obj)
     {
       if (ReferenceEquals(null, obj)) return false;
       if (ReferenceEquals(this, obj)) return true;
-      if (obj.GetType() != this.GetType()) return false;
+      if (obj.GetType() != GetType()) return false;
       return Equals((PlayerInfo)obj);
     }
 
@@ -28,13 +31,24 @@ namespace Kontur.GameStats.Server.DataModels
     {
       unchecked
       {
-        var hashCode = (name != null ? name.GetHashCode() : 0);
+        var hashCode = name?.GetHashCode() ?? 0;
         hashCode = (hashCode * 397) ^ frags;
         hashCode = (hashCode * 397) ^ kills;
         hashCode = (hashCode * 397) ^ deaths;
         return hashCode;
       }
     }
+
+    public bool EqualByNameIgnoreCase(string otherName)
+    {
+      return name.Equals(otherName, StringComparison.InvariantCultureIgnoreCase);
+    }
+
+    public bool EqualByNameIgnoreCase(PlayerInfo other)
+    {
+      return EqualByNameIgnoreCase(other.name);
+    }
+
     #endregion
   }
 }

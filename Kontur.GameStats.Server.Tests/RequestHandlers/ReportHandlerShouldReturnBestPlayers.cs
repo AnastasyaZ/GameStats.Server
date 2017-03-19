@@ -88,8 +88,6 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     {
       A.CallTo(() => database.GetMatches()).Returns(TestData.Matches);
       A.CallTo(() => database.GetServers()).Returns(TestData.Servers);
-      A.CallTo(() => database.GetRecentMatches(1))
-        .Returns(TestData.Matches.OrderByDescending(x=>x.timestamp).Take(1).ToArray());
       handler = new ReportsHandler(database);
 
       var popularServers = handler.GetPopularServers(10).ToArray();
@@ -101,8 +99,6 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     {
       A.CallTo(() => database.GetMatches()).Returns(TestData.Matches);
       A.CallTo(() => database.GetServers()).Returns(TestData.Servers);
-      A.CallTo(() => database.GetRecentMatches(1))
-        .Returns(TestData.Matches.OrderByDescending(x => x.timestamp).Take(1).ToArray());
       handler = new ReportsHandler(database);
 
       var popularServers = handler.GetPopularServers(2).ToArray();
@@ -114,8 +110,6 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     {
       A.CallTo(() => database.GetMatches()).Returns(TestData.Matches.Take(1).ToArray());
       A.CallTo(() => database.GetServers()).Returns(TestData.Servers);
-      A.CallTo(() => database.GetRecentMatches(1))
-        .Returns(TestData.Matches.OrderByDescending(x => x.timestamp).Take(1).ToArray());
       handler = new ReportsHandler(database);
 
       var popularServers = handler.GetPopularServers(2).ToArray();
@@ -127,7 +121,6 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     {
       A.CallTo(() => database.GetMatches()).Returns(new MatchInfo[0]);
       A.CallTo(() => database.GetServers()).Returns(new GameServerInfo[0]);
-      A.CallTo(() => database.GetRecentMatches(1)).Returns(new MatchInfo[0]);
       handler = new ReportsHandler(database);
 
       handler.GetPopularServers(2).Should().BeEmpty();

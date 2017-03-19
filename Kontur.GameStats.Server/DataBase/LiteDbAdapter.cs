@@ -72,17 +72,9 @@ namespace Kontur.GameStats.Server.Database
       return matches.Find(x => x.endpoint == endpoint).ToArray();
     }
 
-    public IList<MatchInfo> GetMatches()
+    public IEnumerable<MatchInfo> GetMatches()
     {
-      return matches.FindAll().ToArray();
-    }
-
-    public IList<MatchInfo> GetRecentMatches(int count)
-    {
-      return matches.FindAll()
-        .OrderByDescending(x => x.timestamp)
-        .Take(count)
-        .ToArray();
+      return matches.FindAll();
     }
 
     #region Dispose

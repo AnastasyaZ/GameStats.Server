@@ -24,8 +24,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
       public void SetUp()
       {
         database = A.Fake<IDatabaseAdapter>();
-        A.CallTo(() => database.GetMatches())
-          .Returns(TestData.Matches);
+        A.CallTo(() => database.GetMatches()).Returns(TestData.Matches);
         handler = new PlayerStatisticHandler(database);
       }
 

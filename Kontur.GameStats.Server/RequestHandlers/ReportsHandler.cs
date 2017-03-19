@@ -30,17 +30,17 @@ namespace Kontur.GameStats.Server.RequestHandlers
       return database.GetMatches()
         .SelectMany(x => x.result.scoreboard)
         .GroupBy(x => x.name.ToLower())
-        .Where(group => group.Count() >= 10) //TODO const
-        .Select(group =>
+        .Where(x => x.Count() >= Constants.MinMatchPlayed)
+        .Select(x =>
         {
-          var totalKills = group.Sum(x => x.kills);
-          var totalDeaths = group.Sum(x => x.deaths);
-          if (totalDeaths == 0) return null;
-          return new PlayerReportInfo
-          {
-            name = group.Key,
-            killToDeathRatio = (double) totalKills/totalDeaths
-          };
+          var killToDeathRatio = x.GetKillsToDeathRatio();
+          return killToDeathRatio == null
+            ? null
+            : new PlayerReportInfo
+            {
+              name = x.Key,
+              killToDeathRatio = killToDeathRatio.Value
+            };
         })
         .SkipNulls()
         .Take(count);
@@ -51,8 +51,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
       if (count < 0 || count > Constants.MaxCount) throw new ArgumentOutOfRangeException(nameof(count));
 
       var servers = database.GetServers();
-      var lastMatch = database.GetRecentMatches(1).FirstOrDefault();
-      var last = lastMatch?.timestamp ?? DateTime.MinValue;
+      var last = database.GetLastMatchDateTime();
       return database.GetMatches()
         .GroupBy(x => x.endpoint)
         .Select(g =>
@@ -61,7 +60,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
           var first = g.Min(x => x.timestamp);
           var totalDays = (last - first).Days + 1;
-          var averageMatchParDay = (double)g.Count()/totalDays;
+          var averageMatchParDay = (double)g.Count() / totalDays;
 
           var name = servers.First(x => x.endpoint.Equals(endpoint)).gameServer.name;
 
@@ -72,7 +71,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
             averageMatchesPerDay = averageMatchParDay
           };
         })
-        .OrderByDescending(x=>x.averageMatchesPerDay)
+        .OrderByDescending(x => x.averageMatchesPerDay)
         .Take(count);
     }
   }

@@ -11,6 +11,8 @@ namespace Kontur.GameStats.Server.DataModels
     public DateTime timestamp { get; set; }
     public MatchResult result { get; set; }
 
+    public int Population => result.scoreboard.Length;
+
     #region equality members
 
     public bool Equals(MatchInfo other)

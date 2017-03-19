@@ -22,11 +22,9 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
       var allMatches = TestData.Matches;
       var serverMatches = allMatches.Where(x => x.endpoint == endpoint).ToArray();
       database = A.Fake<IDatabaseAdapter>();
-      A.CallTo(() => database.GetMatches(endpoint))
-        .Returns(serverMatches);
-      A.CallTo(() => database.GetMatches())
-        .Returns(allMatches);
-      handler=new ServerStatisticHandler(database);
+      A.CallTo(() => database.GetMatches(endpoint)).Returns(serverMatches);
+      A.CallTo(() => database.GetMatches()).Returns(allMatches);
+      handler =new ServerStatisticHandler(database);
     }
 
     [Test]

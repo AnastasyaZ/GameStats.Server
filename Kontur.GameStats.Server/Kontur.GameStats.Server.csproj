@@ -85,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Database\DatabaseAdapterExtensions.cs" />
     <Compile Include="Database\IDatabaseAdapter.cs" />
     <Compile Include="Database\LiteDbAdapter.cs" />
     <Compile Include="DataModels\GameServer.cs" />
@@ -97,13 +98,11 @@
     <Compile Include="DataModels\MatchInfo.cs" />
     <Compile Include="DataModels\MatchResult.cs" />
     <Compile Include="DataModels\PlayerInfo.cs" />
-    <Compile Include="DataModels\PlayerStatistic.cs" />
-    <Compile Include="DataModels\ServerStatistic.cs" />
     <Compile Include="DataModels\Utility\Validators\GameServerInfoValidator.cs" />
     <Compile Include="DataModels\Utility\Validators\GameServerValidator.cs" />
     <Compile Include="DataModels\Utility\Validators\MatchInfoValidator.cs" />
     <Compile Include="DataModels\Utility\Validators\MatchResultValidator.cs" />
-    <Compile Include="DataModels\Utility\Validators\PlayerResultValidator.cs" />
+    <Compile Include="DataModels\Utility\Validators\PlayerInfoValidator.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="Modules\BootstrapperForSingletoneDbAdapter.cs" />
     <Compile Include="Modules\GetDataModule.cs" />
@@ -118,6 +117,7 @@
     <Compile Include="RequestHandlers\PutDataHandler.cs" />
     <Compile Include="RequestHandlers\ReportsHandler.cs" />
     <Compile Include="RequestHandlers\ServerStatisticHandler.cs" />
+    <Compile Include="RequestHandlers\StatisticHandlersExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

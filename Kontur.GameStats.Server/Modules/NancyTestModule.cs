@@ -43,6 +43,8 @@ namespace Kontur.GameStats.Server.Modules
          };
          return Response.AsJson(dict);
        };
+
+      Get["/urlencoded/{str}"] = x => Response.AsJson($"Its ok, value={x.str}");
     }
 
     private Task<HttpStatusCode> DoingWorkInThread(int index)

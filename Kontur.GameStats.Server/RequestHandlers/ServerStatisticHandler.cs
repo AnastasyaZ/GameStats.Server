@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.DataModels.Utility;
 
 namespace Kontur.GameStats.Server.RequestHandlers
 {
@@ -18,8 +17,8 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
     public Dictionary<string, dynamic> GetStatistic(string endpoint)
     {
-      var matches = database.GetMatches(endpoint).ToList();
-      var lastMatchData = database.GetMatches().Max(x => x.timestamp);//todo
+      var matches = database.GetMatches(endpoint).ToArray();
+      var lastMatchData = database.GetLastMatchDateTime();
 
       var statistic = new Dictionary<string, dynamic>
       {
@@ -37,40 +36,37 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
     private static int GetTotalMatchesPlayed(IList<MatchInfo> matches)
     {
-      return matches.Count;
+      return matches.GetTotalMatchesPlayed();
     }
 
     private static int GetMaximumMatchesPerDay(IList<MatchInfo> matches)
     {
-      return matches.GroupBy(x => x.timestamp.Date).Max(x => x.Count());
+      return matches.GetMaximumMatchesPerDay();
     }
 
-    public static double GetAverageMatchesPerDay(IList<MatchInfo> matches, DateTime lastMatch)
+    private static double GetAverageMatchesPerDay(IList<MatchInfo> matches, DateTime lastMatch)
     {
-      var first = matches.Min(x => x.timestamp);
-      var last = lastMatch;
-      var total = matches.Count;
-      return (double) total/((last - first).Days + 1);
+      return matches.GetAverageMatchesPerDay(lastMatch);
     }
 
-    public static int GetMaximumPopulation(IList<MatchInfo> matches)
+    private static int GetMaximumPopulation(IList<MatchInfo> matches)
     {
-      return matches.Max(x => x.result.scoreboard.Length);
+      return matches.Max(x => x.Population);
     }
 
-    public static double GetAveragePopulation(IList<MatchInfo> matches)
+    private static double GetAveragePopulation(IList<MatchInfo> matches)
     {
-      return (double) matches.Sum(x => x.result.scoreboard.Length)/matches.Count;
+      return matches.Average(x=>x.Population);
     }
 
-    public static IList<string> GetTop5GameModes(IList<MatchInfo> matches)
+    private static IList<string> GetTop5GameModes(IList<MatchInfo> matches)
     {
-      return matches.Select(x => x.result.gameMode).GetMostPopular(5).ToArray();
+      return matches.GetTop5(x => x.result.gameMode);
     }
 
-    public static IList<string> GetTop5Maps(IList<MatchInfo> matches)
+    private static IList<string> GetTop5Maps(IList<MatchInfo> matches)
     {
-      return matches.Select(x => x.result.map).GetMostPopular(5).ToArray();
+      return matches.GetTop5(x => x.result.map);
     }
   }
 }

@@ -18,13 +18,10 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
     public Dictionary<string, dynamic> GetStatistic(string name)
     {
-      var matches = database.GetMatches()
-        .Where(x => x.result.scoreboard.Any(p => p.name.Equals(name, StringComparison.InvariantCultureIgnoreCase)))
-        .ToArray();
+      var matches = database.GetMatchesWithPlayer(name);
+      var lastMatchData = database.GetLastMatchDateTime();
 
-      var lastMatchData = database.GetMatches().Max(x => x.timestamp);//TODO DRY
-
-      var statistic=new Dictionary<string, dynamic>
+      var statistic = new Dictionary<string, dynamic>
       {
         {"totalMatchesPlayed", GetTotalMatchesPlayed(matches) },
         {"totalMatchesWon", GetTotalMatchesWon(matches, name) },
@@ -43,71 +40,66 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
     private static int GetTotalMatchesPlayed(IList<MatchInfo> matches)
     {
-      return matches.Count;
+      return matches.GetTotalMatchesPlayed();
     }
 
     private static int GetTotalMatchesWon(IList<MatchInfo> matches, string playerName)
     {
-      return matches.Count(match => 
-        match.result.winner.name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase));
+      return matches.Count(match =>
+        match.result.winner.EqualByNameIgnoreCase(playerName));
     }
 
     private static string GetFavoriteServer(IList<MatchInfo> matches)
     {
-      return matches.Select(x => x.endpoint).GetMostPopular(1).FirstOrDefault();
+      return matches.GetFavorite(x => x.endpoint);
     }
 
     private static int GetUniqueServersCount(IList<MatchInfo> matches)
     {
-      return matches.Select(x => x.endpoint).Distinct().Count();
+      return matches.UniqueCount(x => x.endpoint);
     }
 
     private static string GetFavoriteGameMode(IList<MatchInfo> matches)
     {
-      return matches.Select(x => x.result.gameMode).GetMostPopular(1).FirstOrDefault();
+      return matches.GetFavorite(x => x.result.gameMode);
     }
 
     private static double GetAverageScoreboardPercent(IList<MatchInfo> matches, string playerName)
     {
       return matches.Average(x =>
       {
-        var sc = x.result.scoreboard.ToList(); //TODO
-        var total = sc.Count;
-        var below = total-1 - sc.FindIndex(p => p.name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase));
+        var scoreboard = x.result.scoreboard.ToList();
+        var total = scoreboard.Count;
         if (total < 2) return 0;
+
+        var above = scoreboard.FindIndex(p => p.EqualByNameIgnoreCase(playerName));
+        var below = total - above - 1;
         return (double)below / (total - 1) * 100;
       });
     }
 
     private static int GetMaximumMatchesPerDay(IList<MatchInfo> matches)
     {
-      return matches.GroupBy(x => x.timestamp.Date).Max(x => x.Count());//TODO DRY
+      return matches.GetMaximumMatchesPerDay();
     }
 
     private static double GetAverageMatchesPerDay(IList<MatchInfo> matches, DateTime lastMatch)
     {
-      var first = matches.Min(x => x.timestamp);
-      var last = lastMatch;
-      var total = matches.Count;
-      return (double)total / ((last - first).Days + 1);//TODO DRY
+      return matches.GetAverageMatchesPerDay(lastMatch);
     }
 
     private static DateTime GetLastMatchDateTime(IList<MatchInfo> matches)
     {
-      return matches.Select(x => x.timestamp).Max();
+      return matches.GetLastMatchDateTime();
     }
 
     private static double GetKillToDeathRatio(IList<MatchInfo> matches, string playerName)
     {
       var results = matches
         .SelectMany(x => x.result.scoreboard)
-        .Where(x => x.name.Equals(playerName, StringComparison.InvariantCultureIgnoreCase))
-        .ToArray();
+        .Where(x => x.EqualByNameIgnoreCase(playerName));
 
-      var totalKills = results.Sum(x => x.kills);
-      var totalDeaths = results.Sum(x => x.deaths);
-
-      return (double)totalKills/totalDeaths;
+      return results.GetKillsToDeathRatio() ?? 0;
     }
   }
 }

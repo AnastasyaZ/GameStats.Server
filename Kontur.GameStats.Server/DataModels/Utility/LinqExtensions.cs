@@ -28,6 +28,11 @@ namespace Kontur.GameStats.Server.DataModels.Utility
     public static IEnumerable<T> SkipNulls<T>(this IEnumerable<T> source)
     {
       return source.Where(x => x != null);
-    } 
+    }
+
+    public static int UniqueCount<TIn, TOut>(this IEnumerable<TIn> matches, Func<TIn,TOut> selector)
+    {
+      return matches.Select(selector).Distinct().Count();
+    }
   }
 }
