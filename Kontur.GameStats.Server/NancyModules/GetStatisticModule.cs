@@ -44,11 +44,11 @@ namespace Kontur.GameStats.Server.NancyModules
         return await GetBestPlayersReportAsync(count);
       };
 
-      Get["/reports/popular-servers/", true] = async (x, _) => await GetPopulerServersReportAsync(Constants.DefaultCount);
+      Get["/reports/popular-servers/", true] = async (x, _) => await GetPopularServersReportAsync(Constants.DefaultCount);
       Get["/reports/popular-servers/{count:int}", true] = async (x, _) =>
       {
         var count = NormalizeCount(x.count);
-        return await GetPopulerServersReportAsync(count);
+        return await GetPopularServersReportAsync(count);
       };
     }
 
@@ -132,7 +132,7 @@ namespace Kontur.GameStats.Server.NancyModules
       return task;
     }
 
-    private Task<Response> GetPopulerServersReportAsync(int count)
+    private Task<Response> GetPopularServersReportAsync(int count)
     {
       var task = new Task<Response>(() =>
       {

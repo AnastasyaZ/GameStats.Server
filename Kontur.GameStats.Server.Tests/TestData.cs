@@ -405,7 +405,7 @@ namespace Kontur.GameStats.Server.Tests
         {"averageScoreboardPercent", 47.6190476},
         {"maximumMatchesPerDay", 3},
         {"averageMatchesPerDay", 0.00032051282},
-        {"lastMatchPlayed", "2048-01-22T15:17:00Z".ParseInUts()},
+        {"lastMatchPlayed", "2048-01-22T15:17:00Z"},
         {"killToDeathRatio", 1.280701754}
     };
 

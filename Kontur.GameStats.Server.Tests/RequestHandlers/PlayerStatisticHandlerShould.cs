@@ -42,7 +42,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
         ((int) statistic["maximumMatchesPerDay"]).Should().Be(expectation["maximumMatchesPerDay"]);
         ((double) statistic["averageMatchesPerDay"]).Should()
           .BeApproximately((double) expectation["averageMatchesPerDay"], 0.0001);
-        ((DateTime) statistic["lastMatchPlayed"]).Should().Be(expectation["lastMatchPlayed"]);
+        ((string) statistic["lastMatchPlayed"]).Should().Be(expectation["lastMatchPlayed"]);
         ((double) statistic["killToDeathRatio"]).Should()
           .BeApproximately((double) expectation["killToDeathRatio"], 0.0001);
       }

@@ -106,7 +106,6 @@
     <Compile Include="NancyModules\NancyConfiguration\Validators\PlayerInfoValidator.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="NancyModules\NancyConfiguration\Bootstrapper.cs" />
-    <Compile Include="NancyModules\NancyConfiguration\DateTimeCustomConverter.cs" />
     <Compile Include="NancyModules\GetDataModule.cs" />
     <Compile Include="NancyModules\GetStatisticModule.cs" />
     <Compile Include="NancyModules\PutDataModule.cs" />

@@ -31,7 +31,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
         {"averageScoreboardPercent", GetAverageScoreboardPercent(matches,playerName) },
         {"maximumMatchesPerDay", GetMaximumMatchesPerDay(matches) },
         {"averageMatchesPerDay", GetAverageMatchesPerDay(matches, lastMatchData) },
-        {"lastMatchPlayed", GetLastMatchDateTime(matches) },
+        {"lastMatchPlayed", GetLastMatchDateTime(matches).ToUtcString() },
         {"killToDeathRatio", GetKillToDeathRatio(matches, playerName) }
       };
 

@@ -21,8 +21,8 @@ namespace Kontur.GameStats.Server.Utility
       return new MatchReportInfo
       {
         server = match.endpoint,
-        timestamp = match.timestamp,
-        result = match.result
+        timestamp = match.timestamp.ToUtcString(),
+        results = match.result
       };
     }
   }

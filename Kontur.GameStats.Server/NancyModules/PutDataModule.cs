@@ -81,7 +81,7 @@ namespace Kontur.GameStats.Server.NancyModules
         try
         {
           var success = handler.TryPutMatch(match);
-          return success ? HttpStatusCode.OK : HttpStatusCode.NotAcceptable;
+          return success ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
         }
         catch (Exception e)
         {
