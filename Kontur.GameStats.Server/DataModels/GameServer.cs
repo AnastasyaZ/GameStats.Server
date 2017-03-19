@@ -1,12 +1,13 @@
 ﻿using System;
-using Kontur.GameStats.Server.DataModels.Utility;
+using LiteDB;
 
 namespace Kontur.GameStats.Server.DataModels
 {
   public class GameServer:IEquatable<GameServer>
   {
-    public string name { get; set; }
-    public string[] gameModes { get; set; }
+    [BsonIndex, BsonId]
+    public string endpoint { get; set; }
+    public ServerInfo info { get; set; }
 
     #region equality members
 
@@ -14,8 +15,7 @@ namespace Kontur.GameStats.Server.DataModels
     {
       if (ReferenceEquals(null, other)) return false;
       if (ReferenceEquals(this, other)) return true;
-      if(!string.Equals(name, other.name)) return false;
-      return gameModes.CompareWithoutOrder(other.gameModes);
+      return string.Equals(endpoint, other.endpoint) && info.Equals(other.info);
     }
 
     public override bool Equals(object obj)
@@ -30,7 +30,7 @@ namespace Kontur.GameStats.Server.DataModels
     {
       unchecked
       {
-        return ((name?.GetHashCode() ?? 0)*397) ^ (gameModes?.GetHashCode() ?? 0);
+        return ((endpoint != null ? endpoint.GetHashCode() : 0)*397) ^ (info != null ? info.GetHashCode() : 0);
       }
     }
 

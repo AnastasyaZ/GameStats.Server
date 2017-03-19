@@ -13,7 +13,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
     protected Browser Browser;
     protected BootstrapperForSingletoneDbAdapter Bootstrapper;
 
-    protected GameServer Server;
+    protected ServerInfo Server;
     protected MatchResult Match;
     protected string Endpoint;
     protected string Timestamp;
@@ -24,7 +24,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
       Bootstrapper = new BootstrapperForSingletoneDbAdapter();
       Browser = new Browser(Bootstrapper);
 
-      Server = TestData.Server.gameServer;
+      Server = TestData.Server.info;
       Match = TestData.Match.result;
       Endpoint = TestData.Server.endpoint;
       Timestamp = TestData.Match.timestamp.ToUtcString();

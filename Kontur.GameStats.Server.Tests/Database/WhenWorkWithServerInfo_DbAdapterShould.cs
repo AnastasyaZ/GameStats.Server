@@ -34,7 +34,7 @@ namespace Kontur.GameStats.Server.Tests.Database
       {
         using (var db = new LiteDbAdapter(file.Filename))
         {
-          IList<GameServerInfo> serverInfos = TestData.Servers;
+          IList<GameServer> serverInfos = TestData.Servers;
           foreach (var info in serverInfos)
           {
             db.UpsertServerInfo(info);
@@ -74,7 +74,7 @@ namespace Kontur.GameStats.Server.Tests.Database
         for (var i = 0; i < 10; i++)
         {
           db.UpsertServerInfo(TestData.Server);
-          db.UpsertServerInfo(new GameServerInfo { endpoint = TestData.Server.endpoint, gameServer = new GameServer() });
+          db.UpsertServerInfo(new GameServer { endpoint = TestData.Server.endpoint, info = new ServerInfo() });
           db.UpsertServerInfo(TestData.Server);
         }
         var result = db.GetServers().ToArray();

@@ -62,7 +62,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
           var totalDays = (last - first).Days + 1;
           var averageMatchParDay = (double)g.Count() / totalDays;
 
-          var name = servers.First(x => x.endpoint.Equals(endpoint)).gameServer.name;
+          var name = servers.First(x => x.endpoint.Equals(endpoint)).info.name;
 
           return new ServerReportInfo
           {

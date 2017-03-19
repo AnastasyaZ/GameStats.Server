@@ -16,7 +16,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     private IDatabaseAdapter db;
     private TempFile file;
 
-    private readonly GameServerInfo server = TestData.Server;
+    private readonly GameServer server = TestData.Server;
     private readonly MatchInfo match = TestData.Match;
 
     [SetUp]
@@ -41,7 +41,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
 
       var result = handler.GetGameServer(server.endpoint);
 
-      result.ShouldBeEquivalentTo(server.gameServer);
+      result.ShouldBeEquivalentTo(server.info);
     }
 
     [Test]
@@ -89,7 +89,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
 
       var result = handler.GetGameServers();
 
-      result.Should().BeEquivalentTo(TestData.Servers.Select(s=>s.gameServer));
+      result.Should().BeEquivalentTo(TestData.Servers.Select(s=>s.info));
     }
 
     [Test]

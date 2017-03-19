@@ -30,7 +30,7 @@ namespace Kontur.GameStats.Server.Modules
     {
       var task = new Task<Response>(() =>
       {
-        GameServer server;
+        ServerInfo server;
         try
         {
           server = handler.GetGameServer(endpoint);

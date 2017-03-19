@@ -120,7 +120,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     public void ReturnsEmptyCollection_IfDbIsEmpty()
     {
       A.CallTo(() => database.GetMatches()).Returns(new MatchInfo[0]);
-      A.CallTo(() => database.GetServers()).Returns(new GameServerInfo[0]);
+      A.CallTo(() => database.GetServers()).Returns(new GameServer[0]);
       handler = new ReportsHandler(database);
 
       handler.GetPopularServers(2).Should().BeEmpty();

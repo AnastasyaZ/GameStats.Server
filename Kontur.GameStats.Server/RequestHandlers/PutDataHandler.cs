@@ -12,7 +12,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
       this.database = database;
     }
 
-    public void PutServer(GameServerInfo server)
+    public void PutServer(GameServer server)
     {
       database.UpsertServerInfo(server);
     }

@@ -12,7 +12,7 @@ namespace Kontur.GameStats.Server.Database
   {
     private readonly LiteDatabase database;
 
-    private LiteCollection<GameServerInfo> servers => database.GetCollection<GameServerInfo>();
+    private LiteCollection<GameServer> servers => database.GetCollection<GameServer>();
     private LiteCollection<MatchInfo> matches => database.GetCollection<MatchInfo>();
 
     public LiteDbAdapter()
@@ -34,7 +34,7 @@ namespace Kontur.GameStats.Server.Database
       database = new LiteDatabase(filename);
     }
 
-    public void UpsertServerInfo(GameServerInfo server)
+    public void UpsertServerInfo(GameServer server)
     {
         using (var tr = database.BeginTrans())
         {
@@ -52,7 +52,7 @@ namespace Kontur.GameStats.Server.Database
       }
     }
 
-    public GameServerInfo GetServerInfo(string endpoint)
+    public GameServer GetServerInfo(string endpoint)
     {
       return servers.FindOne(x => x.endpoint == endpoint);
     }
@@ -62,7 +62,7 @@ namespace Kontur.GameStats.Server.Database
       return matches.FindOne(x => x.endpoint == endpoint && x.timestamp == timestamp);
     }
 
-    public IList<GameServerInfo> GetServers()
+    public IList<GameServer> GetServers()
     {
       return servers.FindAll().ToArray();
     }

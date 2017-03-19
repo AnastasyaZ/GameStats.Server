@@ -14,9 +14,9 @@ namespace Kontur.GameStats.Server.RequestHandlers
       this.database = database;
     }
 
-    public GameServer GetGameServer(string endpoint)
+    public ServerInfo GetGameServer(string endpoint)
     {
-      return database.GetServerInfo(endpoint)?.gameServer;
+      return database.GetServerInfo(endpoint)?.info;
     }
 
     public MatchResult GetMatchResult(string endpoint, DateTime timestamp)
@@ -26,7 +26,7 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
     public GameServer[] GetGameServers()
     {
-      return database.GetServers().Select(x => x.gameServer).ToArray();
+      return database.GetServers().ToArray();
     }
   }
 }

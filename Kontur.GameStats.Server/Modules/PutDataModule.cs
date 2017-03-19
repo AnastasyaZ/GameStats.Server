@@ -20,11 +20,11 @@ namespace Kontur.GameStats.Server.Modules
 
       Put["/servers/{endpoint:url}/info", true] = async (x, _) =>
       {
-        var gameServer = this.Bind<GameServer>();
-        var server = new GameServerInfo
+        var gameServer = this.Bind<ServerInfo>();
+        var server = new GameServer
         {
           endpoint = x.endpoint,
-          gameServer = gameServer
+          info = gameServer
         };
         var validationResult = this.Validate(server);
         if (!validationResult.IsValid)
@@ -55,7 +55,7 @@ namespace Kontur.GameStats.Server.Modules
        };
     }
 
-    private Task<HttpStatusCode> AddServerInThread(GameServerInfo server)
+    private Task<HttpStatusCode> AddServerInThread(GameServer server)
     {
       var task = new Task<HttpStatusCode>(() =>
         {

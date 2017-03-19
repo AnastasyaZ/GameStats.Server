@@ -9,30 +9,30 @@ namespace Kontur.GameStats.Server.Tests
   {
     #region server
 
-    public static GameServerInfo[] Servers =
+    public static GameServer[] Servers =
     {
-      new GameServerInfo
+      new GameServer
       {
         endpoint = "kontur.ru-1024",
-        gameServer = new GameServer
+        info = new ServerInfo
         {
           name = "] My P3rfect GameServer [",
           gameModes = new[] {"DM", "TDM"}
         }
       },
-      new GameServerInfo
+      new GameServer
       {
         endpoint = "192.168.35.38-5454",
-        gameServer = new GameServer
+        info = new ServerInfo
         {
           name = "Local",
           gameModes = new[] {"MM", "DM"}
         }
       },
-      new GameServerInfo
+      new GameServer
       {
         endpoint = "gg.com-4545",
-        gameServer = new GameServer
+        info = new ServerInfo
         {
           name = "GG",
           gameModes = new[] {"Ex"}
@@ -40,7 +40,7 @@ namespace Kontur.GameStats.Server.Tests
       }
     };
 
-    public static GameServerInfo Server => Servers[0];
+    public static GameServer Server => Servers[0];
 
     #endregion
 

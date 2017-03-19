@@ -6,13 +6,13 @@ namespace Kontur.GameStats.Server.Database
 {
   public interface IDatabaseAdapter : IDisposable
   {
-    void UpsertServerInfo(GameServerInfo server);
+    void UpsertServerInfo(GameServer server);
     void AddMatchInfo(MatchInfo match);
 
-    GameServerInfo GetServerInfo(string endpoint);
+    GameServer GetServerInfo(string endpoint);
     MatchInfo GetMatchInfo(string endpoint, DateTime timestamp);
 
-    IList<GameServerInfo> GetServers();
+    IList<GameServer> GetServers();
     IList<MatchInfo> GetMatches(string endpoint);
     IEnumerable<MatchInfo> GetMatches();
   }

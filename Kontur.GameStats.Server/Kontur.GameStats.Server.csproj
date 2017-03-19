@@ -88,8 +88,8 @@
     <Compile Include="Database\DatabaseAdapterExtensions.cs" />
     <Compile Include="Database\IDatabaseAdapter.cs" />
     <Compile Include="Database\LiteDbAdapter.cs" />
+    <Compile Include="DataModels\ServerInfo.cs" />
     <Compile Include="DataModels\GameServer.cs" />
-    <Compile Include="DataModels\GameServerInfo.cs" />
     <Compile Include="DataModels\MatchIdentifyers.cs" />
     <Compile Include="DataModels\PlayerReportInfo.cs" />
     <Compile Include="DataModels\ServerReportInfo.cs" />

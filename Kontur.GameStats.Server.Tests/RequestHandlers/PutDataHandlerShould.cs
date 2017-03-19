@@ -16,7 +16,7 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     private IDatabaseAdapter db;
     private TempFile file;
 
-    private readonly GameServerInfo server = TestData.Server;
+    private readonly GameServer server = TestData.Server;
     private readonly MatchInfo match = TestData.Match;
 
     [SetUp]
@@ -49,10 +49,10 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
     {
       db.UpsertServerInfo(server);
 
-      var updatedServer = new GameServerInfo
+      var updatedServer = new GameServer
       {
         endpoint = server.endpoint,
-        gameServer = new GameServer
+        info = new ServerInfo
         {
           name = "New servername",
           gameModes = new[] { "TDM" }

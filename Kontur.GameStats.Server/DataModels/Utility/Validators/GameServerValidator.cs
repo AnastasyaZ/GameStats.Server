@@ -2,7 +2,7 @@
 
 namespace Kontur.GameStats.Server.DataModels.Utility.Validators
 {
-  public class GameServerValidator:AbstractValidator<GameServer>
+  public class GameServerValidator:AbstractValidator<ServerInfo>
   {
     public GameServerValidator()
     {

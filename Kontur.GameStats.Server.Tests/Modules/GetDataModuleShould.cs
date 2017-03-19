@@ -27,7 +27,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
       var response = Browser.Get($"/servers/{Endpoint}/Info");
 
       response.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-      var server = response.Body.DeserializeJson<GameServer>();
+      var server = response.Body.DeserializeJson<ServerInfo>();
       server.ShouldBeEquivalentTo(Server);
     }
 
@@ -82,14 +82,14 @@ namespace Kontur.GameStats.Server.Tests.Modules
       foreach (var s in servers)
       {
         Browser.Put($"/servers/{s.endpoint}/info",
-          with => with.JsonBody(s.gameServer));
+          with => with.JsonBody(s.info));
       }
 
       var responce = Browser.Get("/servers/Info");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
       var responceServers = responce.Body.DeserializeJson<IEnumerable<GameServer>>();
-      responceServers.Should().BeEquivalentTo(servers.Select(x => x.gameServer));
+      responceServers.Should().BeEquivalentTo(servers.Select(x => x));
     }
 
     [Test]
@@ -98,7 +98,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
       var responce = Browser.Get("/servers/Info");
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.OK);
-      var responceServers = responce.Body.DeserializeJson<IEnumerable<GameServer>>();
+      var responceServers = responce.Body.DeserializeJson<IEnumerable<ServerInfo>>();
       responceServers.Should().BeEmpty();
     }
   }
