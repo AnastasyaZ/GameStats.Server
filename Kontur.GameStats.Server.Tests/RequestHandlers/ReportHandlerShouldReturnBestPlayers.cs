@@ -81,8 +81,6 @@ namespace Kontur.GameStats.Server.Tests.RequestHandlers
       handler.GetBestPlayers(5).Count().Should().Be(3);
     }
 
-    //TODO split ino two classes amd move initialization in ctor
-
     [Test]
     public void ReturnPopularServers_InCorrectOrder()
     {

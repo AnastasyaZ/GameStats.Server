@@ -1,6 +1,6 @@
 ﻿using System;
 using FluentAssertions;
-using Kontur.GameStats.Server.DataModels.Utility;
+using Kontur.GameStats.Server.Utility;
 using NUnit.Framework;
 
 namespace Kontur.GameStats.Server.Tests

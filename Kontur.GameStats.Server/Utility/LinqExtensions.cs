@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kontur.GameStats.Server.DataModels.Utility
+namespace Kontur.GameStats.Server.Utility
 {
   public static class LinqExtensions
   {

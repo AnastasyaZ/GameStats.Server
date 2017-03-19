@@ -94,8 +94,8 @@
     <Compile Include="DataModels\MatchIdentifyers.cs" />
     <Compile Include="DataModels\PlayerReportInfo.cs" />
     <Compile Include="DataModels\ServerReportInfo.cs" />
-    <Compile Include="DataModels\Utility\ConvertExtensions.cs" />
-    <Compile Include="DataModels\Utility\LinqExtensions.cs" />
+    <Compile Include="Utility\ConvertExtensions.cs" />
+    <Compile Include="Utility\LinqExtensions.cs" />
     <Compile Include="DataModels\MatchInfo.cs" />
     <Compile Include="DataModels\MatchResult.cs" />
     <Compile Include="DataModels\PlayerInfo.cs" />
@@ -105,11 +105,10 @@
     <Compile Include="NancyModules\NancyConfiguration\Validators\MatchResultValidator.cs" />
     <Compile Include="NancyModules\NancyConfiguration\Validators\PlayerInfoValidator.cs" />
     <Compile Include="EntryPoint.cs" />
-    <Compile Include="NancyModules\NancyConfiguration\BootstrapperForSingletoneDbAdapter.cs" />
+    <Compile Include="NancyModules\NancyConfiguration\Bootstrapper.cs" />
     <Compile Include="NancyModules\NancyConfiguration\DateTimeCustomConverter.cs" />
     <Compile Include="NancyModules\GetDataModule.cs" />
     <Compile Include="NancyModules\GetStatisticModule.cs" />
-    <Compile Include="NancyModules\NancyTestModule.cs" />
     <Compile Include="NancyModules\PutDataModule.cs" />
     <Compile Include="NancyModules\NancyConfiguration\RouteConstraints\UrlConstraint.cs" />
     <Compile Include="NancyModules\NancyConfiguration\RouteConstraints\TimestampConstraint.cs" />

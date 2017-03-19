@@ -86,7 +86,6 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void DoNotAddNewRecords_IfServerAlreadyAdded_InParallelThreads()
     {
-      //for (var i = 0; i < 100; i++)
         using (var file = new TempFile())
         using (var db = new LiteDbAdapter(file.Filename))
         {
@@ -109,7 +108,6 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void ReadAndWrite_InParallelThreads()
     {
-      //for (var j = 0; j < 100; j++)
         using (var file = new TempFile())
         {
           using (var db = new LiteDbAdapter(file.Filename))

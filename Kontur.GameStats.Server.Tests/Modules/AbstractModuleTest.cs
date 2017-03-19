@@ -1,8 +1,8 @@
 ﻿using System.Configuration;
 using System.IO;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.NancyModules.NancyConfiguration;
+using Kontur.GameStats.Server.Utility;
 using Nancy.Testing;
 using NUnit.Framework;
 
@@ -11,7 +11,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
   public abstract class AbstractModuleTest
   {
     protected Browser Browser;
-    protected BootstrapperForSingletoneDbAdapter Bootstrapper;
+    protected Bootstrapper Bootstrapper;
 
     protected ServerInfo Server;
     protected MatchResult Match;
@@ -21,7 +21,7 @@ namespace Kontur.GameStats.Server.Tests.Modules
     [SetUp]
     public void SetUp()
     {
-      Bootstrapper = new BootstrapperForSingletoneDbAdapter();
+      Bootstrapper = new Bootstrapper();
       Browser = new Browser(Bootstrapper);
 
       Server = TestData.Server.info;

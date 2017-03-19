@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Kontur.GameStats.Server.DataModels.Utility;
+using Kontur.GameStats.Server.Utility;
 using Nancy.Routing.Constraints;
 
 namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration.RouteConstraints

@@ -73,19 +73,6 @@ namespace Kontur.GameStats.Server.Tests.Modules
     }
 
     [Test]
-    [Ignore("not implemented")]
-    public void ReturnBadRequest_OnIncorrectTimestamp()
-    {
-
-    }
-
-    [Test]
-    [Ignore("not implemented")]
-    public void ReturnBadRequest_OnIncorrectEndpoint()
-    {
-    }
-
-    [Test]
     public void ReturnBadRequest_OnIncorrectMatchResultModel()
     {
       var notMatch = TestData.Server;
@@ -98,9 +85,5 @@ namespace Kontur.GameStats.Server.Tests.Modules
 
       responce.StatusCode.ShouldBeEquivalentTo(HttpStatusCode.BadRequest);
     }
-
-    //TODO add test for incorrect only one field in model
-    //TODO check elements of arrays also
-    //TODO check string on null/empty
   }
 }

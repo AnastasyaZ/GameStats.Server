@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using Kontur.GameStats.Server.DataModels;
 
-namespace Kontur.GameStats.Server.DataModels.Utility
+namespace Kontur.GameStats.Server.Utility
 {
   public static class ConvertExtensions
   {

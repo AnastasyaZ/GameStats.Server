@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.DataModels.Utility;
+using Kontur.GameStats.Server.Utility;
 
 namespace Kontur.GameStats.Server.RequestHandlers
 {

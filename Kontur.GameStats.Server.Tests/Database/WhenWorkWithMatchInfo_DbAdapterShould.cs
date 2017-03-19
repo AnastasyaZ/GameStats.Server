@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Kontur.GameStats.Server.Database;
@@ -26,7 +28,7 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void AddAllRecords()
     {
-      using (var file = new TempFile())//TODO remove
+      using (var file = new TempFile())
       using (var db = new LiteDbAdapter(file.Filename))
       {
         foreach (var match in matches)
@@ -47,17 +49,17 @@ namespace Kontur.GameStats.Server.Tests.Database
     [Test]
     public void AddAllRecords_Parallel()
     {
-      //for (var i = 0; i < 100; i++)
+      for (var i = 0; i < 100; i++)
       {
         using (var file = new TempFile())
         using (var db = new LiteDbAdapter(file.Filename))
         {
           Parallel.ForEach(matches, match =>
           {
-            //var rnd = new Random();
-            //Thread.Sleep(rnd.Next(100));
+            var rnd = new Random();
+            Thread.Sleep(rnd.Next(100));
             db.AddMatchInfo(match);
-            //Thread.Sleep(rnd.Next(100));
+            Thread.Sleep(rnd.Next(100));
             var x = db.GetMatches().First(m => m.endpoint == match.endpoint && m.timestamp == match.timestamp);
             var y = db.GetMatches(match.endpoint).First(m => m.timestamp == match.timestamp);
             var z = db.GetMatchInfo(match.endpoint, match.timestamp);

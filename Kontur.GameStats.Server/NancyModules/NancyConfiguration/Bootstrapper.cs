@@ -5,7 +5,7 @@ using Nancy.TinyIoc;
 
 namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration
 {
-  public class BootstrapperForSingletoneDbAdapter:DefaultNancyBootstrapper
+  public class Bootstrapper:DefaultNancyBootstrapper
   {
     protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
     {

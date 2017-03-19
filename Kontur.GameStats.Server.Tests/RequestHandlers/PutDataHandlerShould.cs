@@ -2,9 +2,9 @@
 using FluentAssertions;
 using Kontur.GameStats.Server.Database;
 using Kontur.GameStats.Server.DataModels;
-using Kontur.GameStats.Server.DataModels.Utility;
 using Kontur.GameStats.Server.RequestHandlers;
 using Kontur.GameStats.Server.Tests.Database;
+using Kontur.GameStats.Server.Utility;
 using NUnit.Framework;
 
 namespace Kontur.GameStats.Server.Tests.RequestHandlers

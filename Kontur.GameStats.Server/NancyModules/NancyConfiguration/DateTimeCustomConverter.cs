@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Kontur.GameStats.Server.DataModels.Utility;
+using Kontur.GameStats.Server.Utility;
 using Nancy.Json;
 
 namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration
