@@ -8,10 +8,10 @@ namespace Kontur.GameStats.Server.DataModels.Utility.Validators
     {
       RuleFor(result => result.map).NotEmpty();
       RuleFor(result => result.gameMode).NotEmpty();
-      RuleFor(result => result.fragLimit).NotEmpty();
-      RuleFor(result => result.timeLimit).NotEmpty();
-      RuleFor(result => result.timeElapsed).NotEmpty();
-      RuleForEach(result => result.scoreboard).SetValidator(new PlayerResultValidator());
+      RuleFor(result => result.fragLimit).GreaterThanOrEqualTo(0);
+      RuleFor(result => result.timeLimit).GreaterThanOrEqualTo(0);
+      RuleFor(result => result.timeElapsed).GreaterThanOrEqualTo(0);
+      RuleForEach(result => result.scoreboard).SetValidator(new PlayerInfoValidator());
     }
   }
 }
