@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Nancy;
 using Nancy.ModelBinding;
 
-namespace Kontur.GameStats.Server.Modules
+namespace Kontur.GameStats.Server.NancyModules
 {
   public class NancyTestModule : NancyModule
   {

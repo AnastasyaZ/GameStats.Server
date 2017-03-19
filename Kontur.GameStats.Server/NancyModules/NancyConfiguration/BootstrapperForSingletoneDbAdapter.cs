@@ -3,7 +3,7 @@ using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 
-namespace Kontur.GameStats.Server.Modules
+namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration
 {
   public class BootstrapperForSingletoneDbAdapter:DefaultNancyBootstrapper
   {
@@ -11,6 +11,7 @@ namespace Kontur.GameStats.Server.Modules
     {
       base.ApplicationStartup(container, pipelines);
       container.Register<IDatabaseAdapter, LiteDbAdapter>().AsSingleton();
+      Nancy.Json.JsonSettings.Converters.Add(new DateTimeCustomConverter());
     }
   }
 }

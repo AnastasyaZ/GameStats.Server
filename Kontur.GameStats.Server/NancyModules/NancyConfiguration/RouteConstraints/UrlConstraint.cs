@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Nancy.Routing.Constraints;
 
-namespace Kontur.GameStats.Server.Modules.RouteConstraints
+namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration.RouteConstraints
 {
   public class UrlConstraint : RouteSegmentConstraintBase<string>
   {

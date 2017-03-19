@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Kontur.GameStats.Server.DataModels.Utility;
 using Nancy.Routing.Constraints;
 
-namespace Kontur.GameStats.Server.Modules.RouteConstraints
+namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration.RouteConstraints
 {
   public class TimestampConstraint : RouteSegmentConstraintBase<DateTime>
   {

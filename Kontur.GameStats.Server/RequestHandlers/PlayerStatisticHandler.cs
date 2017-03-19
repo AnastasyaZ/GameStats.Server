@@ -16,23 +16,23 @@ namespace Kontur.GameStats.Server.RequestHandlers
       this.database = database;
     }
 
-    public Dictionary<string, dynamic> GetStatistic(string name)
+    public Dictionary<string, dynamic> GetStatistic(string playerName)
     {
-      var matches = database.GetMatchesWithPlayer(name);
+      var matches = database.GetMatchesWithPlayer(playerName);
       var lastMatchData = database.GetLastMatchDateTime();
 
       var statistic = new Dictionary<string, dynamic>
       {
         {"totalMatchesPlayed", GetTotalMatchesPlayed(matches) },
-        {"totalMatchesWon", GetTotalMatchesWon(matches, name) },
+        {"totalMatchesWon", GetTotalMatchesWon(matches, playerName) },
         {"favoriteServer", GetFavoriteServer(matches) },
         {"uniqueServers", GetUniqueServersCount(matches) },
         {"favoriteGameMode", GetFavoriteGameMode(matches) },
-        {"averageScoreboardPercent", GetAverageScoreboardPercent(matches,name) },
+        {"averageScoreboardPercent", GetAverageScoreboardPercent(matches,playerName) },
         {"maximumMatchesPerDay", GetMaximumMatchesPerDay(matches) },
         {"averageMatchesPerDay", GetAverageMatchesPerDay(matches, lastMatchData) },
         {"lastMatchPlayed", GetLastMatchDateTime(matches) },
-        {"killToDeathRatio", GetKillToDeathRatio(matches, name) }
+        {"killToDeathRatio", GetKillToDeathRatio(matches, playerName) }
       };
 
       return statistic;
@@ -45,8 +45,8 @@ namespace Kontur.GameStats.Server.RequestHandlers
 
     private static int GetTotalMatchesWon(IList<MatchInfo> matches, string playerName)
     {
-      return matches.Count(match =>
-        match.result.winner.EqualByNameIgnoreCase(playerName));
+      Func<MatchInfo, PlayerInfo> winner = match => match.result.scoreboard[0];
+      return matches.Count(match =>winner(match).EqualByNameIgnoreCase(playerName));
     }
 
     private static string GetFavoriteServer(IList<MatchInfo> matches)

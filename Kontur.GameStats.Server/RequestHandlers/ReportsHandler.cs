@@ -16,11 +16,11 @@ namespace Kontur.GameStats.Server.RequestHandlers
       this.database = database;
     }
 
-    public IEnumerable<MatchInfo> GetRecentMatches(int count)
+    public IEnumerable<MatchReportInfo> GetRecentMatches(int count)
     {
       if (count < 0 || count > Constants.MaxCount) throw new ArgumentOutOfRangeException(nameof(count));
 
-      return database.GetRecentMatches(count);
+      return database.GetRecentMatches(count).Select(x => x.ToReportInfo());
     }
 
     public IEnumerable<PlayerReportInfo> GetBestPlayers(int count)

@@ -7,7 +7,7 @@ using Nancy.ModelBinding;
 using Nancy.Validation;
 using NLog;
 
-namespace Kontur.GameStats.Server.Modules
+namespace Kontur.GameStats.Server.NancyModules
 {
   public class PutDataModule : NancyModule
   {
@@ -33,7 +33,7 @@ namespace Kontur.GameStats.Server.Modules
           return HttpStatusCode.BadRequest;
         }
 
-        return await AddServerInThread(server);
+        return await AddServerAsync(server);
       };
 
       Put["/servers/{endpoint:url}/matches/{timestamp:utc_timestamp}", true] = async (x, _) =>
@@ -51,11 +51,11 @@ namespace Kontur.GameStats.Server.Modules
            return HttpStatusCode.BadRequest;
          }
 
-         return await AddMatchInfoInThread(matchInfo);
+         return await AddMatchInfoAsync(matchInfo);
        };
     }
 
-    private Task<HttpStatusCode> AddServerInThread(GameServer server)
+    private Task<HttpStatusCode> AddServerAsync(GameServer server)
     {
       var task = new Task<HttpStatusCode>(() =>
         {
@@ -74,7 +74,7 @@ namespace Kontur.GameStats.Server.Modules
       return task;
     }
 
-    private Task<HttpStatusCode> AddMatchInfoInThread(MatchInfo match)
+    private Task<HttpStatusCode> AddMatchInfoAsync(MatchInfo match)
     {
       var task = new Task<HttpStatusCode>(() =>
       {

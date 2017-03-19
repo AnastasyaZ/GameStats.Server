@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Kontur.GameStats.Server.Modules;
+using Kontur.GameStats.Server.NancyModules;
 using Nancy;
 using Nancy.Testing;
 using NUnit.Framework;

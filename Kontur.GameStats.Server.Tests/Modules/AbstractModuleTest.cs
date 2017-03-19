@@ -2,7 +2,7 @@
 using System.IO;
 using Kontur.GameStats.Server.DataModels;
 using Kontur.GameStats.Server.DataModels.Utility;
-using Kontur.GameStats.Server.Modules;
+using Kontur.GameStats.Server.NancyModules.NancyConfiguration;
 using Nancy.Testing;
 using NUnit.Framework;
 

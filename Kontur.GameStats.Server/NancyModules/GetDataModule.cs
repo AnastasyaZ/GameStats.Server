@@ -5,7 +5,7 @@ using Kontur.GameStats.Server.RequestHandlers;
 using Nancy;
 using NLog;
 
-namespace Kontur.GameStats.Server.Modules
+namespace Kontur.GameStats.Server.NancyModules
 {
   public class GetDataModule : NancyModule
   {
@@ -17,16 +17,16 @@ namespace Kontur.GameStats.Server.Modules
       this.handler = handler;
 
       Get["/servers/{endpoint:url}/Info", true] = async (x, _)
-        => await GetServerInThread(x.endpoint);
+        => await GetServerAsync(x.endpoint);
 
       Get["/servers/{endpoint:url}/matches/{timestamp:utc_timestamp}", true] = async (x, _)
-        => await GetMatchInThread(x.endpoint, x.timestamp);
+        => await GetMatchAsync(x.endpoint, x.timestamp);
 
       Get["/servers/Info", true] = async (x, _)
-        => await GetServersInThread();
+        => await GetServersAsync();
     }
 
-    private Task<Response> GetServerInThread(string endpoint)
+    private Task<Response> GetServerAsync(string endpoint)
     {
       var task = new Task<Response>(() =>
       {
@@ -50,7 +50,7 @@ namespace Kontur.GameStats.Server.Modules
       return task;
     }
 
-    private Task<Response> GetMatchInThread(string endpoint, DateTime timestamp)
+    private Task<Response> GetMatchAsync(string endpoint, DateTime timestamp)
     {
       var task = new Task<Response>(() =>
       {
@@ -73,7 +73,7 @@ namespace Kontur.GameStats.Server.Modules
       return task;
     }
 
-    private Task<Response> GetServersInThread()
+    private Task<Response> GetServersAsync()
     {
       var task = new Task<Response>(() =>
       {

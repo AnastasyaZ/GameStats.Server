@@ -96,7 +96,7 @@
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="filters" type="NLogFilters" />
     </xs:choice>
-    <xs:attribute name="name" use="optional">
+    <xs:attribute name="playerName" use="optional">
       <xs:annotation>
         <xs:documentation>Name of the logger. May include '*' character which acts like a wildcard. Allowed forms are: *, Name, *Name, Name* and *Name*</xs:documentation>
       </xs:annotation>
@@ -174,7 +174,7 @@
   <xs:complexType name="NLogInclude">
     <xs:attribute name="file" type="SimpleLayoutAttribute" use="required">
       <xs:annotation>
-        <xs:documentation>Name of the file to be included. The name is relative to the name of the current config file.</xs:documentation>
+        <xs:documentation>Name of the file to be included. The name is relative to the playerName of the current config file.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="ignoreErrors" type="xs:boolean" use="optional" default="false">
@@ -184,7 +184,7 @@
     </xs:attribute>
   </xs:complexType>
   <xs:complexType name="NLogVariable">
-    <xs:attribute name="name" type="xs:string" use="required">
+    <xs:attribute name="playerName" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>Variable name.</xs:documentation>
       </xs:annotation>
@@ -202,7 +202,7 @@
   </xs:simpleType>
   <xs:complexType name="Target" abstract="true"></xs:complexType>
   <xs:complexType name="TargetRef">
-    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="playerName" type="xs:string" use="required" />
   </xs:complexType>
   <xs:complexType name="WrapperTargetBase" abstract="true">
     <xs:complexContent>
@@ -248,7 +248,7 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="batchSize" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="fullBatchSizeWriteLimit" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="overflowAction" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.AsyncTargetWrapperOverflowAction" />
@@ -256,7 +256,7 @@
           <xs:element name="timeToSleepBetweenBatches" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -305,11 +305,11 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="condition" minOccurs="0" maxOccurs="1" type="Condition" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -331,13 +331,13 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="bufferSize" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="flushTimeout" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="slidingTimeout" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -369,7 +369,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="encoding" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="lineEnding" minOccurs="0" maxOccurs="1" type="LineEndingMode" />
@@ -392,7 +392,7 @@
           <xs:element name="ndcItemSeparator" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -517,14 +517,14 @@
   <xs:complexType name="NLog.Targets.NLogViewerParameterInfo">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
-      <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+      <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
     </xs:choice>
     <xs:attribute name="layout" type="SimpleLayoutAttribute">
       <xs:annotation>
         <xs:documentation>Layout that should be use to calcuate the value for the parameter.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="name" type="xs:string">
+    <xs:attribute name="playerName" type="xs:string">
       <xs:annotation>
         <xs:documentation>Viewer parameter name.</xs:documentation>
       </xs:annotation>
@@ -534,7 +534,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="header" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="footer" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -546,7 +546,7 @@
           <xs:element name="errorStream" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -687,7 +687,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="header" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="footer" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -696,7 +696,7 @@
           <xs:element name="encoding" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -743,7 +743,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="useTransactions" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="dbUserName" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="dbProvider" minOccurs="0" maxOccurs="1" type="xs:string" />
@@ -761,7 +761,7 @@
           <xs:element name="commandText" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="commandType" minOccurs="0" maxOccurs="1" type="System.Data.CommandType" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -873,7 +873,7 @@
   <xs:complexType name="NLog.Targets.DatabaseParameterInfo">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
-      <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+      <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
       <xs:element name="precision" minOccurs="0" maxOccurs="1" type="xs:byte" />
       <xs:element name="scale" minOccurs="0" maxOccurs="1" type="xs:byte" />
       <xs:element name="size" minOccurs="0" maxOccurs="1" type="xs:integer" />
@@ -883,7 +883,7 @@
         <xs:documentation>Layout that should be use to calcuate the value for the parameter.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="name" type="xs:string">
+    <xs:attribute name="playerName" type="xs:string">
       <xs:annotation>
         <xs:documentation>Database parameter name.</xs:documentation>
       </xs:annotation>
@@ -908,13 +908,13 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="header" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="footer" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -946,11 +946,11 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -972,7 +972,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="category" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="eventId" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -984,7 +984,7 @@
           <xs:element name="maxMessageLength" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1053,11 +1053,11 @@
     <xs:complexContent>
       <xs:extension base="CompoundTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="returnToFirstOnSuccess" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1079,7 +1079,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="header" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="footer" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -1108,7 +1108,7 @@
           <xs:element name="replaceFileContentsOnEachWrite" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="concurrentWrites" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="keepFileOpen" minOccurs="0" maxOccurs="1" type="xs:boolean" />
-          <xs:element name="maxLogFilenames" minOccurs="0" maxOccurs="1" type="xs:integer" />
+          <xs:element name="maxLogFileplayerNames" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="networkWrites" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="openFileCacheSize" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="openFileCacheTimeout" minOccurs="0" maxOccurs="1" type="xs:integer" />
@@ -1118,7 +1118,7 @@
           <xs:element name="concurrentWriteAttemptDelay" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="concurrentWriteAttempts" minOccurs="0" maxOccurs="1" type="xs:integer" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1190,7 +1190,7 @@
         </xs:attribute>
         <xs:attribute name="cleanupFileName" type="xs:boolean">
           <xs:annotation>
-            <xs:documentation>Cleanup invalid values in a filename, e.g. slashes in a filename. If set to true, this can impact the performance of massive writes. If set to false, nothing gets written when the filename is wrong.</xs:documentation>
+            <xs:documentation>Cleanup invalid values in a filename, e.g. slashes in a fileplayerName. If set to true, this can impact the performance of massive writes. If set to false, nothing gets written when the fileplayerName is wrong.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="discardAll" type="xs:boolean">
@@ -1263,7 +1263,7 @@
             <xs:documentation>Indicates whether to keep log file open instead of opening and closing it on each logging event.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="maxLogFilenames" type="xs:integer">
+        <xs:attribute name="maxLogFileplayerNames" type="xs:integer">
           <xs:annotation>
             <xs:documentation>Maximum number of log filenames that should be stored as existing.</xs:documentation>
           </xs:annotation>
@@ -1360,11 +1360,11 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="condition" minOccurs="0" maxOccurs="1" type="Condition" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1386,7 +1386,7 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="domain" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="impersonationLevel" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.SecurityImpersonationLevel" />
           <xs:element name="logOnProvider" minOccurs="0" maxOccurs="1" type="NLog.Targets.Wrappers.LogOnProviderType" />
@@ -1396,7 +1396,7 @@
           <xs:element name="userName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1471,12 +1471,12 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="interval" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="messageLimit" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1503,7 +1503,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="endpointAddress" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="endpointConfigurationName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="useOneWayContract" minOccurs="0" maxOccurs="1" type="xs:boolean" />
@@ -1513,7 +1513,7 @@
           <xs:element name="useBinaryEncoding" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1559,7 +1559,7 @@
   <xs:complexType name="NLog.Targets.MethodCallParameter">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
-      <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+      <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
       <xs:element name="type" minOccurs="0" maxOccurs="1" type="xs:string" />
     </xs:choice>
     <xs:attribute name="layout" type="SimpleLayoutAttribute">
@@ -1567,7 +1567,7 @@
         <xs:documentation>Layout that should be use to calculate the value for the parameter.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="name" type="xs:string">
+    <xs:attribute name="playerName" type="xs:string">
       <xs:annotation>
         <xs:documentation>Name of the parameter.</xs:documentation>
       </xs:annotation>
@@ -1582,7 +1582,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="header" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="footer" minOccurs="0" maxOccurs="1" type="Layout" />
@@ -1609,7 +1609,7 @@
           <xs:element name="pickupDirectoryLocation" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="deliveryMethod" minOccurs="0" maxOccurs="1" type="System.Net.Mail.SmtpDeliveryMethod" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1760,11 +1760,11 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1786,7 +1786,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="encoding" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="useXmlEncoding" minOccurs="0" maxOccurs="1" type="xs:boolean" />
@@ -1797,7 +1797,7 @@
           <xs:element name="queue" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="recoverable" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1854,13 +1854,13 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="className" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="methodName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="NLog.Targets.MethodCallParameter" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1872,7 +1872,7 @@
         </xs:attribute>
         <xs:attribute name="methodName" type="xs:string">
           <xs:annotation>
-            <xs:documentation>Method name. The method must be public and static. Use the AssemblyQualifiedName , https://msdn.microsoft.com/en-us/library/system.type.assemblyqualifiedname(v=vs.110).aspx e.g.</xs:documentation>
+            <xs:documentation>Method name. The method must be public and static. Use the AssemblyQualifiedName , https://msdn.microsoft.com/en-us/library/system.type.assemblyqualifiedplayerName(v=vs.110).aspx e.g.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
         <xs:attribute name="optimizeBufferReuse" type="xs:boolean">
@@ -1887,7 +1887,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="encoding" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="lineEnding" minOccurs="0" maxOccurs="1" type="LineEndingMode" />
@@ -1902,7 +1902,7 @@
           <xs:element name="maxQueueSize" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -1979,7 +1979,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="encoding" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="lineEnding" minOccurs="0" maxOccurs="1" type="LineEndingMode" />
@@ -2002,7 +2002,7 @@
           <xs:element name="ndcItemSeparator" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2114,12 +2114,12 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="formatMessage" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2146,11 +2146,11 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2172,7 +2172,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="autoCreate" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="categoryName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="counterHelp" minOccurs="0" maxOccurs="1" type="xs:string" />
@@ -2182,7 +2182,7 @@
           <xs:element name="instanceName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2266,12 +2266,12 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="defaultFilter" minOccurs="0" maxOccurs="1" type="Condition" />
           <xs:element name="when" minOccurs="0" maxOccurs="unbounded" type="NLog.Targets.Wrappers.FilteringRule" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2309,10 +2309,10 @@
     <xs:complexContent>
       <xs:extension base="CompoundTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2329,11 +2329,11 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="repeatCount" minOccurs="0" maxOccurs="1" type="xs:integer" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2355,12 +2355,12 @@
     <xs:complexContent>
       <xs:extension base="WrapperTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="retryCount" minOccurs="0" maxOccurs="1" type="xs:integer" />
           <xs:element name="retryDelayMilliseconds" minOccurs="0" maxOccurs="1" type="xs:integer" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2387,10 +2387,10 @@
     <xs:complexContent>
       <xs:extension base="CompoundTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2407,10 +2407,10 @@
     <xs:complexContent>
       <xs:extension base="CompoundTargetBase">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2427,11 +2427,11 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2453,7 +2453,7 @@
     <xs:complexContent>
       <xs:extension base="Target">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="includeBOM" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="NLog.Targets.MethodCallParameter" />
           <xs:element name="optimizeBufferReuse" minOccurs="0" maxOccurs="1" type="xs:boolean" />
@@ -2461,13 +2461,13 @@
           <xs:element name="escapeDataNLogLegacy" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="escapeDataRfc3986" minOccurs="0" maxOccurs="1" type="xs:boolean" />
           <xs:element name="methodName" minOccurs="0" maxOccurs="1" type="xs:string" />
-          <xs:element name="namespace" minOccurs="0" maxOccurs="1" type="xs:string" />
+          <xs:element name="playerNamespace" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="protocol" minOccurs="0" maxOccurs="1" type="NLog.Targets.WebServiceProtocol" />
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="xs:anyURI" />
           <xs:element name="xmlRoot" minOccurs="0" maxOccurs="1" type="xs:string" />
           <xs:element name="xmlRootNamespace" minOccurs="0" maxOccurs="1" type="xs:string" />
         </xs:choice>
-        <xs:attribute name="name" type="xs:string">
+        <xs:attribute name="playerName" type="xs:string">
           <xs:annotation>
             <xs:documentation>Name of the target.</xs:documentation>
           </xs:annotation>
@@ -2502,7 +2502,7 @@
             <xs:documentation>Web service method name. Only used with Soap.</xs:documentation>
           </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="namespace" type="xs:string">
+        <xs:attribute name="playerNamespace" type="xs:string">
           <xs:annotation>
             <xs:documentation>Web service namespace. Only used with Soap.</xs:documentation>
           </xs:annotation>
@@ -2630,14 +2630,14 @@
   <xs:complexType name="NLog.Layouts.CsvColumn">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
-      <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+      <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
     </xs:choice>
     <xs:attribute name="layout" type="SimpleLayoutAttribute">
       <xs:annotation>
         <xs:documentation>Layout of the column.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="name" type="xs:string">
+    <xs:attribute name="playerName" type="xs:string">
       <xs:annotation>
         <xs:documentation>Name of the column.</xs:documentation>
       </xs:annotation>
@@ -2680,7 +2680,7 @@
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="encode" minOccurs="0" maxOccurs="1" type="xs:boolean" />
       <xs:element name="layout" minOccurs="0" maxOccurs="1" type="Layout" />
-      <xs:element name="name" minOccurs="0" maxOccurs="1" type="xs:string" />
+      <xs:element name="playerName" minOccurs="0" maxOccurs="1" type="xs:string" />
     </xs:choice>
     <xs:attribute name="encode" type="xs:boolean">
       <xs:annotation>
@@ -2692,7 +2692,7 @@
         <xs:documentation>Layout that will be rendered as the attribute's value.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="name" type="xs:string">
+    <xs:attribute name="playerName" type="xs:string">
       <xs:annotation>
         <xs:documentation>Name of the attribute.</xs:documentation>
       </xs:annotation>

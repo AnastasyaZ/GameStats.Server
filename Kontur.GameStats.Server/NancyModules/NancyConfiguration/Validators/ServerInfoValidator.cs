@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
+using Kontur.GameStats.Server.DataModels;
 
-namespace Kontur.GameStats.Server.DataModels.Utility.Validators
+namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration.Validators
 {
-  public class GameServerValidator:AbstractValidator<ServerInfo>
+  public class ServerInfoValidator:AbstractValidator<ServerInfo>
   {
-    public GameServerValidator()
+    public ServerInfoValidator()
     {
       RuleFor(server => server.name).NotEmpty().WithMessage("You must specify a server name");
       RuleFor(server => server.gameModes).NotEmpty().WithMessage("You must specify game models");

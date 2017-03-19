@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
+using Kontur.GameStats.Server.DataModels;
 
-namespace Kontur.GameStats.Server.DataModels.Utility.Validators
+namespace Kontur.GameStats.Server.NancyModules.NancyConfiguration.Validators
 {
   public class MatchInfoValidator:AbstractValidator<MatchInfo>
   {
